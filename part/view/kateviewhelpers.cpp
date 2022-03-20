@@ -1703,7 +1703,7 @@ void KateIconBorder::paintBorder (int /*x*/, int y, int /*width*/, int height)
       if (realLine > -1) {
         if (m_viewInternal->cache()->viewLine(z).startCol() == 0) {
           if (m_viRelLineNumbersOn && m_view->viInputMode()) {
-            int diff = abs(realLine - currentLine);
+            int diff = abs(static_cast<int>(realLine - currentLine));
             if (diff > 0) {
               p.drawText( lnX + m_maxCharWidth / 2, y, lnWidth - m_maxCharWidth, h,
                           Qt::TextDontClip|Qt::AlignRight|Qt::AlignVCenter, QString("%1").arg(diff) );
