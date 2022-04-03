@@ -1,6 +1,13 @@
 # define project
 project(katepart)
 
+macro_optional_find_package(LibAttica)
+set_package_properties(LibAttica PROPERTIES DESCRIPTION "A library to access Open Collaboration Service providers"
+                       URL "https://projects.kde.org/attica"
+                       TYPE OPTIONAL
+                       PURPOSE "Attica is needed for the Get Hot New Stuff support"
+                      )
+
 # these subdirs have their own CMakeLists
 add_subdirectory( data )
 
@@ -233,8 +240,16 @@ kde4_add_library (katepartinterfaces ${LIBRARY_TYPE} ${katepart_PART_SRCS} )
 target_link_libraries (
    katepartinterfaces
    LINK_PUBLIC ${KDE4_KPARTS_LIBS}
-   LINK_PRIVATE ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KCMUTILS_LIBS} ${KDE4_KTEXTEDITOR_LIBS} ${QT_QTSCRIPT_LIBRARY} ${KDE_4_4_LIBS_NEEDED} ${KDE4_KNEWSTUFF3_LIBS}
+   LINK_PRIVATE ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KCMUTILS_LIBS} ${KDE4_KTEXTEDITOR_LIBS} ${QT_QTSCRIPT_LIBRARY} ${KDE_4_4_LIBS_NEEDED}
 )
+
+if(LIBATTICA_FOUND)
+  add_definitions(-DENABLE_KNEWSTUFF3)
+  target_link_libraries (
+    katepartinterfaces
+    LINK_PRIVATE ${KDE4_KNEWSTUFF3_LIBS}
+  )
+endif(LIBATTICA_FOUND)
 
 set_target_properties(
   katepartinterfaces PROPERTIES

@@ -38,9 +38,10 @@
 #include "snippetfilterproxymodel.h"
 
 #include <KGlobalSettings>
-
+#ifdef ENABLE_KNEWSTUFF3
 #include <KNS3/DownloadDialog>
 #include <knewstuff3/uploaddialog.h>
+#endif
 
 SnippetView::SnippetView(KateSnippetGlobal* plugin, QWidget* parent)
  : QWidget(parent), Ui::SnippetViewBase(), m_plugin(plugin)
@@ -78,11 +79,11 @@ SnippetView::SnippetView(KateSnippetGlobal* plugin, QWidget* parent)
     m_removeRepoAction = new KAction(KIcon("edit-delete"), i18n("Remove Repository"), this);
     connect(m_removeRepoAction, SIGNAL(triggered()), this, SLOT(slotRemoveRepo()));
     addAction(m_removeRepoAction);
-
+#ifdef ENABLE_KNEWSTUFF3
     m_putNewStuffAction = new KAction(KIcon("get-hot-new-stuff"), i18n("Publish Repository"), this);
     connect(m_putNewStuffAction, SIGNAL(triggered()), this, SLOT(slotSnippetToGHNS()));
     addAction(m_putNewStuffAction);
-
+#endif
     QAction* separator = new QAction(this);
     separator->setSeparator(true);
     addAction(separator);
@@ -98,11 +99,11 @@ SnippetView::SnippetView(KateSnippetGlobal* plugin, QWidget* parent)
     addAction(m_removeSnippetAction);
 
     addAction(separator);
-
+#ifdef ENABLE_KNEWSTUFF3
     m_getNewStuffAction = new KAction(KIcon("get-hot-new-stuff"), i18n("Get New Snippets"), this);
     connect(m_getNewStuffAction, SIGNAL(triggered()), this, SLOT(slotGHNS()));
     addAction(m_getNewStuffAction);
-
+#endif
     connect(snippetTree->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(validateActions()));
     validateActions();
 }
@@ -122,8 +123,9 @@ void SnippetView::validateActions()
     m_addRepoAction->setEnabled(true);
     m_editRepoAction->setEnabled(selectedRepo);
     m_removeRepoAction->setEnabled(selectedRepo);
+#ifdef ENABLE_KNEWSTUFF3
     m_putNewStuffAction->setEnabled(selectedRepo);
-
+#endif
     m_addSnippetAction->setEnabled(selectedRepo || selectedSnippet);
     m_editSnippetAction->setEnabled(selectedSnippet);
     m_removeSnippetAction->setEnabled(selectedSnippet);
@@ -161,8 +163,9 @@ void SnippetView::contextMenu (const QPoint& pos)
         menu.addTitle(i18n("Snippets"));
 
         menu.addAction(m_addRepoAction);
+#ifdef ENABLE_KNEWSTUFF3
         menu.addAction(m_getNewStuffAction);
-
+#endif
         menu.exec(snippetTree->mapToGlobal(pos));
     } else if (Snippet* snippet = dynamic_cast<Snippet*>( item )) {
         KMenu menu(this);
@@ -178,7 +181,9 @@ void SnippetView::contextMenu (const QPoint& pos)
 
         menu.addAction(m_editRepoAction);
         menu.addAction(m_removeRepoAction);
+#ifdef ENABLE_KNEWSTUFF3
         menu.addAction(m_putNewStuffAction);
+#endif
         menu.addSeparator();
 
         menu.addAction(m_addSnippetAction);
@@ -285,7 +290,7 @@ void SnippetView::slotFilterChanged()
 {
     m_proxy->changeFilter( filterText->text() );
 }
-
+#ifdef ENABLE_KNEWSTUFF3
 void SnippetView::slotGHNS()
 {
     KNS3::DownloadDialog dialog("ktexteditor_codesnippets_core.knsrc", this);
@@ -321,7 +326,7 @@ void SnippetView::slotSnippetToGHNS()
     dialog.setUploadName(repo->text());
     dialog.exec();
 }
-
+#endif
 bool SnippetView::eventFilter(QObject* obj, QEvent* e)
 {
     // no, listening to activated() is not enough since that would also trigger the edit mode which we _dont_ want here
