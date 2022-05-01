@@ -380,6 +380,7 @@ bool KateViInsertMode::handleKeypress( const QKeyEvent *e )
         m_isExecutingCompletion = false;
         return true;
       }
+      [[fallthrough]];
     default:
       return false;
       break;
