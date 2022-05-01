@@ -764,7 +764,7 @@ void KateViInputModeManager::addMark( KateDocument* doc, const QChar& mark, cons
 
   // Showing what mark we set:
   if ( showmark && mark != '>' && mark != '<' && mark != '[' && mark != '.' && mark != ']') {
-    if( !marktype & MarkInterface::markType01 ) {
+    if( !(marktype & MarkInterface::markType01) ) {
       m_view->doc()->addMark( pos.line(),
           MarkInterface::markType01 );
     }
