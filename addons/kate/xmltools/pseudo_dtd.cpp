@@ -113,7 +113,7 @@ bool PseudoDTD::parseElements( QDomDocument *doc, QProgressDialog *progress )
     if( progress->wasCanceled() )
       return false;
 
-      progress->setValue( progress->value()+1 );
+    progress->setValue( progress->value()+1 );
     // FIXME!:
     //qApp->processEvents();
 
@@ -182,7 +182,7 @@ bool PseudoDTD::parseElements( QDomDocument *doc, QProgressDialog *progress )
       for( it = subelementList.begin(); it != subelementList.end(); ++it )
         subelementListTmp.append( it.key() );
 
-        m_elementsList.insert( elem.attribute( "name" ), subelementListTmp );
+      m_elementsList.insert( elem.attribute( "name" ), subelementListTmp );
 
     }
 

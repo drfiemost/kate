@@ -306,7 +306,7 @@ void KateConsole::slotToggleFocus()
   if (m_part->widget()->hasFocus()) {
     if (m_mw->activeView())
       m_mw->activeView()->setFocus();
-      action->setText( i18n("Focus Terminal") );
+    action->setText( i18n("Focus Terminal") );
   } else {
     // show the view if it is hidden
     if (parentWidget()->isHidden())
