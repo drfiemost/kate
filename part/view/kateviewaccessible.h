@@ -248,7 +248,9 @@ class KateViewAccessible : public QAccessibleWidgetEx, public QAccessibleTextInt
 
         virtual int navigate(QAccessible::RelationFlag relation, int entry, QAccessibleInterface **target) const
         {
-            if ((relation == QAccessible::Child || QAccessible::FocusChild) && entry == KateCursorAccessible::ChildId) {
+            //if ((relation == QAccessible::Child || QAccessible::FocusChild) && entry == KateCursorAccessible::ChildId) {
+            if ((relation == QAccessible::Child || relation == QAccessible::FocusChild)
+                    && entry == KateCursorAccessible::ChildId) {
                 *target = new KateCursorAccessible(view());
                 return KateCursorAccessible::ChildId;
             }
