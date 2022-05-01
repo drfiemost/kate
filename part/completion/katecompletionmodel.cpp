@@ -1857,7 +1857,7 @@ static inline bool containsAtWordBeginning(const QString& word, const QString& t
       }
     }
     return false;
-};
+}
 
 KateCompletionModel::Item::MatchType KateCompletionModel::Item::match()
 {
