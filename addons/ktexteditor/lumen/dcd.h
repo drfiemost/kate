@@ -26,7 +26,7 @@
 #include <kprocess.h>
 #include <kicon.h>
 
-namespace DCDCompletionType { enum DCDCompletionType { Identifiers, Calltips }; };
+namespace DCDCompletionType { enum DCDCompletionType { Identifiers, Calltips }; }
 namespace DCDCompletionItemType {
     enum DCDCompletionItemType {
         Invalid,
@@ -49,7 +49,7 @@ namespace DCDCompletionItemType {
 
     char toChar(DCDCompletionItemType e);
     DCDCompletionItemType fromChar(char c);
-};
+}
 
 struct DCDCompletionItem {
     DCDCompletionItem(DCDCompletionItemType::DCDCompletionItemType, QString);

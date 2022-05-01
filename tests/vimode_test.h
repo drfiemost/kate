@@ -117,7 +117,7 @@ public:
      * A more reliable form of setAutomaticInvocationEnabled().
      */
     void forceInvocationIfDocTextIs(const QString& desiredDocText);
-    void doNotForceInvocation();;
+    void doNotForceInvocation();
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
     virtual void executeCompletionItem(KTextEditor::Document* document, const KTextEditor::Range& word, int row) const;
     KTextEditor::CodeCompletionInterface * cc( ) const;

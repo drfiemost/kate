@@ -45,7 +45,7 @@ class KConfigBase;
 
 namespace Kate {
   class PluginConfigPageInterface;
-};
+}
 
 namespace KateMDI
 {
