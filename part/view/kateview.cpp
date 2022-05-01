@@ -310,13 +310,13 @@ KateView::~KateView()
   if (factory())
     factory()->removeClient (this);
 
-    KTextEditor::ViewBarContainer *viewBarContainer=qobject_cast<KTextEditor::ViewBarContainer*>( KateGlobal::self()->container() );
-    if (viewBarContainer) {
-     viewBarContainer->deleteViewBarForView(this,KTextEditor::ViewBarContainer::BottomBar);
-      m_bottomViewBar=0;
-      viewBarContainer->deleteViewBarForView(this,KTextEditor::ViewBarContainer::TopBar);
-      m_topViewBar=0;
-    }
+  KTextEditor::ViewBarContainer *viewBarContainer=qobject_cast<KTextEditor::ViewBarContainer*>( KateGlobal::self()->container() );
+  if (viewBarContainer) {
+    viewBarContainer->deleteViewBarForView(this,KTextEditor::ViewBarContainer::BottomBar);
+    m_bottomViewBar=0;
+    viewBarContainer->deleteViewBarForView(this,KTextEditor::ViewBarContainer::TopBar);
+    m_topViewBar=0;
+  }
 
   KatePartPluginManager::self()->removeView(this);
 
