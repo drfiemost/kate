@@ -96,7 +96,7 @@ int KateRegExp::repairPattern(bool & stillMultiLine)
 
         case L'n':
           stillMultiLine = true;
-          // FALLTROUGH
+          [[fallthrough]];
 
         default:
           // copy "\?" unmodified
@@ -164,7 +164,7 @@ int KateRegExp::repairPattern(bool & stillMultiLine)
 
         case L'n':
           stillMultiLine = true;
-          // FALLTROUGH
+          [[fallthrough]];
 
         default:
           // copy "\?" unmodified
