@@ -178,17 +178,12 @@ void TabBarPluginView::slotModifiedOnDisc(KTextEditor::Document* document, bool 
     m_tabBar->setTabIcon(tabID, QIcon());
   } else {
     switch (reason) {
-    case KTextEditor::ModificationInterface::OnDiskModified:
-      m_tabBar->setTabIcon(tabID, KIconLoader::global()
-                           ->loadIcon("dialog-warning", KIconLoader::Small));
-      break;
     case KTextEditor::ModificationInterface::OnDiskCreated:
       m_tabBar->setTabIcon(tabID, KIconLoader::global()
                            ->loadIcon("document-save", KIconLoader::Small));
       break;
+    case KTextEditor::ModificationInterface::OnDiskModified:
     case KTextEditor::ModificationInterface::OnDiskDeleted:
-      m_tabBar->setTabIcon(tabID, KIconLoader::global()
-                           ->loadIcon("dialog-warning", KIconLoader::Small));
     default:
       m_tabBar->setTabIcon(tabID, KIconLoader::global()
                            ->loadIcon("dialog-warning", KIconLoader::Small));
