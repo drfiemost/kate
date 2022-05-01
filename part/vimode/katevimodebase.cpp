@@ -1481,6 +1481,7 @@ void KateViModeBase::switchView(Direction direction) {
             best_y1 = y1;
             best_center_x = center_x;
           }
+          break;
         case Up:
           if (view != m_view && y2 <= curr_y1 &&
               ( y2 > best_y2 ||
