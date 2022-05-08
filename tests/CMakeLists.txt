@@ -20,7 +20,7 @@ include_directories(
   ${KDE4_KIO_INCLUDES}
 )
 
-set (KATE_TEST_LINK_LIBS ${KDE4_KDECORE_LIBS} ${QT_QTSCRIPT_LIBRARY} ${QT_QTTEST_LIBRARY} ${KDE4_KCMUTILS_LIBS} ${KDE_4_4_LIBS_NEEDED} ${KDE4_KTEXTEDITOR_LIBS} katepartinterfaces)
+set (KATE_TEST_LINK_LIBS ${KDE4_KDECORE_LIBS} Qt4::QtScript Qt4::QtTest ${KDE4_KCMUTILS_LIBS} ${KDE_4_4_LIBS_NEEDED} ${KDE4_KTEXTEDITOR_LIBS} katepartinterfaces)
 
 # buffer test
 kde4_add_unit_test(katetextbuffertest katetextbuffertest.cpp katetextbuffertest.h)
@@ -32,7 +32,7 @@ kde4_add_unit_test(range_test TESTNAME kate-range_test range_test.cpp)
 
 target_link_libraries( range_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -93,7 +93,7 @@ kde4_add_unit_test(searchbar_test TESTNAME kate-searchbar_test searchbar_test.cp
 
 target_link_libraries( searchbar_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -106,7 +106,7 @@ kde4_add_unit_test(vimode_test TESTNAME kate-vimode_test vimode_test.cpp)
 
 target_link_libraries( vimode_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -117,7 +117,7 @@ kde4_add_unit_test(movingcursor_test TESTNAME kate-movingcursor_test movingcurso
 
 target_link_libraries( movingcursor_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -128,7 +128,7 @@ kde4_add_unit_test(movingrange_test TESTNAME kate-movingrange_test movingrange_t
 
 target_link_libraries( movingrange_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -139,7 +139,7 @@ kde4_add_unit_test(katedocument_test TESTNAME kate-katedocument_test katedocumen
 
 target_link_libraries( katedocument_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -150,7 +150,7 @@ kde4_add_unit_test(kateview_test TESTNAME kate-kateview_test kateview_test.cpp)
 
 target_link_libraries( kateview_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -161,7 +161,7 @@ kde4_add_unit_test(revision_test TESTNAME kate-revision_test revision_test.cpp)
 
 target_link_libraries( revision_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -172,7 +172,7 @@ kde4_add_unit_test(modificationsystem_test TESTNAME kate-modificationsystem_test
 
 target_link_libraries( modificationsystem_test ${KATE_TEST_LINK_LIBS}
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -183,7 +183,7 @@ kde4_add_unit_test(templatehandler_test TESTNAME kate-templatehandler_test templ
 
 target_link_libraries( templatehandler_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -194,7 +194,7 @@ kde4_add_unit_test(katecodefoldingtest TESTNAME codefoldingtest katefoldingtest.
 
 target_link_libraries( katecodefoldingtest
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -254,7 +254,7 @@ set_tests_properties(kate-bug286887_test PROPERTIES TIMEOUT 4)
 
 target_link_libraries( bug286887_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -270,7 +270,7 @@ kde4_add_unit_test(bug313759_test TESTNAME kate-bug313759_test ${bug313759_SRCS}
 
 target_link_libraries(bug313759_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -281,7 +281,7 @@ kde4_add_unit_test(bug313769_test TESTNAME kate-bug313769_test bug313769.cpp)
 
 target_link_libraries( bug313769_test
  ${KDE4_KDEUI_LIBS}
- ${QT_QTTEST_LIBRARY}
+ Qt4::QtTest
  ${KATE_TEST_LINK_LIBS}
  katepartinterfaces
 )
@@ -297,7 +297,7 @@ kde4_add_unit_test(bug317111_test TESTNAME kate-bug317111_test ${bug317111_SRCS}
 
 target_link_libraries( bug317111_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -308,7 +308,7 @@ kde4_add_unit_test(kte_documentcursor_test TESTNAME kte-documentcursor_test kte_
 
 target_link_libraries( kte_documentcursor_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )
@@ -319,7 +319,7 @@ kde4_add_unit_test(kte_messageinterface_test TESTNAME kte-messageinterface messa
 
 target_link_libraries( kte_messageinterface_test
   ${KDE4_KDEUI_LIBS}
-  ${QT_QTTEST_LIBRARY}
+  Qt4::QtTest
   ${KATE_TEST_LINK_LIBS}
   katepartinterfaces
 )

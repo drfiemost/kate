@@ -45,7 +45,7 @@ target_link_libraries(
     katepateplugin
     ${KDE4_KDEUI_LIBS}
     ${PYTHON_LIBRARY}
-    ${QT_QTWEBKIT_LIBRARY}
+    Qt4::QtWebKit
     kateinterfaces
   )
 

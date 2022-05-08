@@ -8,6 +8,6 @@ add_executable(
 
 target_link_libraries(
     unit_tests
-    ${QT_QTTEST_LIBRARY_RELEASE}
-    ${QT_QTCORE_LIBRARY_RELEASE}
+    Qt4::QtTest
+    Qt4::QtCore
   )

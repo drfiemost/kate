@@ -240,7 +240,7 @@ kde4_add_library (katepartinterfaces ${LIBRARY_TYPE} ${katepart_PART_SRCS} )
 target_link_libraries (
    katepartinterfaces
    LINK_PUBLIC ${KDE4_KPARTS_LIBS}
-   LINK_PRIVATE ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KCMUTILS_LIBS} ${KDE4_KTEXTEDITOR_LIBS} ${QT_QTSCRIPT_LIBRARY} ${KDE_4_4_LIBS_NEEDED}
+   LINK_PRIVATE ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KCMUTILS_LIBS} ${KDE4_KTEXTEDITOR_LIBS} Qt4::QtScript ${KDE_4_4_LIBS_NEEDED}
 )
 
 if(LIBATTICA_FOUND)
@@ -273,7 +273,7 @@ kde4_add_plugin (katepart utils/katefactory.cpp)
 # link the part, use kate part interfaces + kde stuff
 target_link_libraries (katepart
   ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS}
-  ${KDE4_KCMUTILS_LIBS} ${KDE4_KTEXTEDITOR_LIBS} ${QT_QTSCRIPT_LIBRARY} katepartinterfaces)
+  ${KDE4_KCMUTILS_LIBS} ${KDE4_KTEXTEDITOR_LIBS} Qt4::QtScript katepartinterfaces)
 
 # install the part
 install (TARGETS katepart DESTINATION ${PLUGIN_INSTALL_DIR})

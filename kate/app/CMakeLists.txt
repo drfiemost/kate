@@ -36,7 +36,7 @@ endif()
 
 target_link_libraries(kateinterfaces
    LINK_PUBLIC ${KDE4_KPARTS_LIBS}
-   LINK_PRIVATE ${KDE_4_4_LIBS_NEEDED} ${QT_QTXML_LIBRARY} ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KPARTS_LIBS} ${KACTIVITIES_LIBRARY} )
+   LINK_PRIVATE ${KDE_4_4_LIBS_NEEDED} Qt4::QtXml ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KPARTS_LIBS} ${KACTIVITIES_LIBRARY} )
 
 set_target_properties(kateinterfaces PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION})
 
@@ -57,12 +57,12 @@ if (WIN32)
 
     kde4_add_executable(kate ${kate_KDEINIT_SRCS} )
 
-    target_link_libraries( kate ${QT_QTMAIN_LIBRARY} ${QT_QTGUI_LIBRARY} ${KDE4_KDECORE_LIBS} kateinterfaces )
+    target_link_libraries( kate ${QT_QTMAIN_LIBRARY} Qt4::QtGui ${KDE4_KDECORE_LIBS} kateinterfaces )
 
 else (WIN32)
     kde4_add_kdeinit_executable( kate ${kate_KDEINIT_SRCS})
 
-    target_link_libraries(kdeinit_kate ${QT_QTGUI_LIBRARY} ${KDE4_KDECORE_LIBS} kateinterfaces )
+    target_link_libraries(kdeinit_kate Qt4::QtGui ${KDE4_KDECORE_LIBS} kateinterfaces )
 
     install(TARGETS kdeinit_kate ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
