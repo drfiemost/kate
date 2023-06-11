@@ -45,23 +45,10 @@ include_directories (
   ${KDE4_KIO_INCLUDES}
 )
 
-# allow to build own ktexteditor
-option(BUILD_KTEXTEDITOR "Build KTextEditor interfaces, instead of reusing the system version" OFF)
-if (BUILD_KTEXTEDITOR)
-  # use our own copies of some stuff
-  set (KDE4_KTEXTEDITOR_LIBS "ktexteditor")
-
-  # add more includes to let the local ktexteditor stuff be found
-  include_directories (BEFORE ${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/includes)
-
-  # ktexteditor interfaces, copy from kdelibs/interfaces/ktexteditor
-  macro_optional_add_subdirectory (ktexteditor)
-else()
-  # kdelibs 4.11 is required
-  if("${KDE_VERSION}" VERSION_LESS 4.10.60)
-    message(FATAL_ERROR "kdelibs version ${KDE_VERSION}, but 4.11 is required. Set the option BUILD_KTEXTEDITOR to ON to build anyway.")
-  endif()
-endif (BUILD_KTEXTEDITOR)
+# kdelibs 4.11 is required
+if("${KDE_VERSION}" VERSION_LESS 4.10.60)
+  message(FATAL_ERROR "kdelibs version ${KDE_VERSION}, but 4.11 is required. Set the option BUILD_KTEXTEDITOR to ON to build anyway.")
+endif()
 
 # kate part
 macro_optional_add_subdirectory (part)
