@@ -52,10 +52,6 @@
 #include <KGlobalSettings>
 #include <kstandardshortcut.h>
 
-#ifdef KActivities_FOUND
-#include <KActivities/ResourceInstance>
-#endif
-
 #include <QApplication>
 #include <QObject>
 #include <QFileInfo>
@@ -456,12 +452,6 @@ bool KateViewManager::createView ( KTextEditor::Document *doc )
 
   viewCreated(view);
 
-#ifdef KActivities_FOUND
-  Q_ASSERT(!m_activityResources.contains(view)); // view was just created -> cannot be in hash
-  m_activityResources[view] = new KActivities::ResourceInstance(view->window()->winId(), view);
-  m_activityResources[view]->setUri(doc->url());
-#endif
-
   activateView( view );
 
   return true;
@@ -476,10 +466,6 @@ bool KateViewManager::deleteView (KTextEditor::View *view, bool delViewSpace)
   viewspace->removeView (view);
 
   mainWindow()->guiFactory ()->removeClient (view);
-
-#ifdef KActivities_FOUND
-  m_activityResources.remove(view);
-#endif
 
   // kill LRU mapping
   m_lruViews.remove (view);
@@ -601,13 +587,6 @@ void KateViewManager::reactivateActiveView()
 void KateViewManager::activateView ( KTextEditor::View *view )
 {
   if (!view) return;
-
-#ifdef KActivities_FOUND
-  if (m_activityResources.contains(view)) {
-    m_activityResources[view]->setUri(view->document()->url());
-    m_activityResources[view]->notifyFocusedIn();
-  }
-#endif
 
   if (!m_activeStates[view])
   {
@@ -899,10 +878,6 @@ void KateViewManager::restoreViewConfiguration (const KConfigGroup& config)
   qDeleteAll( m_viewSpaceList );
   m_viewSpaceList.clear();
   m_activeStates.clear();
-  
-#ifdef KActivities_FOUND
-  m_activityResources.clear();
-#endif
 
   // reset lru history, too!
   m_lruViews.clear();

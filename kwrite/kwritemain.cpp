@@ -52,10 +52,6 @@
 #include <kxmlguifactory.h>
 #include <kmenubar.h>
 
-#ifdef KActivities_FOUND
-#include <KActivities/ResourceInstance>
-#endif
-
 #include <QtCore/QTimer>
 #include <QtCore/QTextCodec>
 
@@ -68,9 +64,6 @@ KWrite::KWrite (KTextEditor::Document *doc)
       m_paShowPath(0),
       m_paShowStatusBar(0),
       m_paShowMenuBar(0)
-#ifdef KActivities_FOUND
-      , m_activityResource(0)
-#endif
 {
   if ( !doc )
   {
@@ -234,12 +227,6 @@ void KWrite::setupStatusBar()
 // load on url
 void KWrite::loadURL(const KUrl &url)
 {
-#ifdef KActivities_FOUND
-  if (!m_activityResource) {
-    m_activityResource = new KActivities::ResourceInstance(winId(), this);
-  }
-  m_activityResource->setUri(url);
-#endif
   m_view->document()->openUrl(url);
 }
 

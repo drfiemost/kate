@@ -36,10 +36,6 @@ class QLabel;
 
 namespace KTextEditor { class EditorChooser; }
 
-#ifdef KActivities_FOUND
-namespace KActivities { class ResourceInstance; }
-#endif
-
 class KToggleAction;
 class KRecentFilesAction;
 class KSqueezedTextLabel;
@@ -120,10 +116,6 @@ class KWrite : public KParts::MainWindow
     KToggleAction * m_paShowPath;
     KToggleAction * m_paShowStatusBar;
     KToggleAction *m_paShowMenuBar;
-
-#ifdef KActivities_FOUND
-    KActivities::ResourceInstance * m_activityResource;
-#endif
 
     QString encoding;
 
