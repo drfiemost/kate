@@ -79,17 +79,7 @@ private slots:
      * Creates a new snippet and open the edit dialog for it
      */
     void slotAddSnippet();
-#ifdef ENABLE_KNEWSTUFF3
-    /**
-     * Slot to get hot new stuff.
-     */
-    void slotGHNS();
 
-    /**
-     * Slot to put the selected snippet to GHNS
-     */
-    void slotSnippetToGHNS();
-#endif
     /**
      * Changes the filter of the proxy.
      */
@@ -113,10 +103,6 @@ private:
     KAction* m_addSnippetAction;
     KAction* m_removeSnippetAction;
     KAction* m_editSnippetAction;
-#ifdef ENABLE_KNEWSTUFF3
-    KAction* m_getNewStuffAction;
-    KAction* m_putNewStuffAction;
-#endif
 };
 
 #endif
