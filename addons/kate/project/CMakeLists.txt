@@ -1,5 +1,7 @@
 # we need QJson
 set (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+set(FPHSA_NAME_MISMATCHED TRUE)
 macro_optional_find_package(QJSON)
 macro_log_feature(QJSON_FOUND "QJSON" "Json parser for Qt" "")
 

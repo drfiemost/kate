@@ -29,6 +29,7 @@ macro_log_feature(SIP_FOUND "SIP" "Support for SIP Python bindings" "")
 macro_optional_find_package(PyQt4)
 macro_log_feature(PYQT4_FOUND "PyQt4" "Python bindings for Qt4" "")
 
+set(FPHSA_NAME_MISMATCHED TRUE)
 macro_optional_find_package(PyKDE4)
 macro_log_feature(PYKDE4_FOUND "PyKDE4" "Python bindings for KDE4" "")
 
