@@ -72,11 +72,10 @@ KateSQLView::KateSQLView(Kate::MainWindow *mw)
 
   m_schemaBrowserWidget = new SchemaBrowserWidget(m_schemaBrowserToolView, m_manager);
 
-  m_connectionsComboBox = new KComboBox(this);
+  m_connectionsComboBox = new KComboBox(false);
   m_connectionsComboBox->setEditable(false);
   m_connectionsComboBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
   m_connectionsComboBox->setModel(m_manager->connectionModel());
-//   m_connectionsComboBox->setItemDelegate( new ConnectionDelegate(this) );
 
   setupActions();
 
@@ -137,9 +136,10 @@ void KateSQLView::setupActions()
   action->setIcon(  KIcon("view-refresh") );
   connect( action , SIGNAL(triggered()) , this , SLOT(slotConnectionReconnect()) );
 
-  action = collection->addAction("connection_chooser");
-  action->setText( i18nc("@action:intoolbar", "Connection") );
-  action->setDefaultWidget(m_connectionsComboBox);
+  QWidgetAction *wa = new QWidgetAction(this);
+  collection->addAction(QLatin1String ("connection_chooser"), wa);
+  wa->setText( i18nc("@action:intoolbar", "Connection") );
+  wa->setDefaultWidget(m_connectionsComboBox);
 
   action = collection->addAction("query_run");
   action->setText( i18nc("@action:inmenu", "Run query") );
