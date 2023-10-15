@@ -1,5 +1,3 @@
-cmake_minimum_required( VERSION 2.6 )
-
 # building separately or as part of kdesdk?
 if(NOT KDE4_FOUND)
     find_package(KDE4 REQUIRED)
