@@ -114,7 +114,7 @@ QVariant KateWordCompletionModel::data(const QModelIndex& index, int role) const
 QModelIndex KateWordCompletionModel::parent(const QModelIndex& index) const
 {
   if(index.internalId())
-    return createIndex(0, 0, 0);
+    return createIndex(0, 0, quintptr(0));
   else
     return QModelIndex();
 }
@@ -123,7 +123,7 @@ QModelIndex KateWordCompletionModel::index(int row, int column, const QModelInde
 {
   if( !parent.isValid()) {
     if(row == 0)
-      return createIndex(row, column, 0);
+      return createIndex(row, column, quintptr(0));
     else
       return QModelIndex();
 

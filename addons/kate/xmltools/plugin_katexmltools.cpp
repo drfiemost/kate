@@ -334,7 +334,7 @@ QModelIndex PluginKateXMLToolsCompletionModel::index(const int row, const int co
   if (parent.internalId() == groupNode)                     // Is this a group node?
   {
     if (0 <= row && row < m_allowed.size())                 // Make sure to return only valid indices
-      return createIndex(row, column, 0);                   // Just return a leaf-level index
+      return createIndex(row, column, quintptr(0));         // Just return a leaf-level index
   }
   // Leaf node has no children... nothing to return
   return QModelIndex();

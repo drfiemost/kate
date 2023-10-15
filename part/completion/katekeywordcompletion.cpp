@@ -82,7 +82,7 @@ void KateKeywordCompletionModel::completionInvoked(KTextEditor::View* view, cons
 QModelIndex KateKeywordCompletionModel::parent(const QModelIndex& index) const
 {
     if ( index.internalId() )
-        return createIndex(0, 0, 0);
+        return createIndex(0, 0, quintptr(0));
     else
         return QModelIndex();
 }
@@ -91,7 +91,7 @@ QModelIndex KateKeywordCompletionModel::index(int row, int column, const QModelI
 {
     if ( !parent.isValid() ) {
         if ( row == 0 )
-            return createIndex(row, column, 0);
+            return createIndex(row, column, quintptr(0));
         else
             return QModelIndex();
     } else if ( parent.parent().isValid() ) {
