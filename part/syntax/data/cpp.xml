@@ -443,17 +443,36 @@
     <item> Q_CC_XLC </item>
     <item> Q_CHECK_PTR </item>
     <item> Q_CLEANUP_RESOURCE </item>
+    <item> Q_COMPILER_ALIGNAS </item>
+    <item> Q_COMPILER_ALIGNOF </item>
+    <item> Q_COMPILER_ATOMICS </item>
+    <item> Q_COMPILER_ATTRIBUTES </item>
+    <item> Q_COMPILER_AUTO_FUNCTION </item>
     <item> Q_COMPILER_AUTO_TYPE </item>
     <item> Q_COMPILER_CLASS_ENUM </item>
     <item> Q_COMPILER_CONSTEXPR </item>
     <item> Q_COMPILER_DECLTYPE </item>
     <item> Q_COMPILER_DEFAULT_DELETE_MEMBERS </item>
+    <item> Q_COMPILER_DELEGATING_CONSTRUCTORS </item>
+    <item> Q_COMPILER_EXPLICIT_OVERRIDES </item>
     <item> Q_COMPILER_EXTERN_TEMPLATES </item>
+    <item> Q_COMPILER_INHERITING_CONSTRUCTORS </item>
     <item> Q_COMPILER_INITIALIZER_LISTS </item>
     <item> Q_COMPILER_LAMBDA </item>
+    <item> Q_COMPILER_NONSTATIC_MEMBER_INIT </item>
+    <item> Q_COMPILER_NULLPTR </item>
+    <item> Q_COMPILER_RANGE_FOR </item>
+    <item> Q_COMPILER_RAW_STRINGS </item>
+    <item> Q_COMPILER_REF_QUALIFIERS </item>
     <item> Q_COMPILER_MANGLES_RETURN_TYPE </item>
     <item> Q_COMPILER_RVALUE_REFS </item>
+    <item> Q_COMPILER_STATIC_ASSERT </item>
+    <item> Q_COMPILER_TEMPLATE_ALIAS </item>
+    <item> Q_COMPILER_THREAD_LOCAL </item>
+    <item> Q_COMPILER_UDL </item>
     <item> Q_COMPILER_UNICODE_STRINGS </item>
+    <item> Q_COMPILER_UNRESTRICTED_UNIONS </item>
+    <item> Q_COMPILER_VARIADIC_MACROS </item>
     <item> Q_COMPILER_VARIADIC_TEMPLATES </item>
     <item> Q_CONSTRUCTOR_FUNCTION </item>
     <item> Q_CONSTRUCTOR_FUNCTION0 </item>
@@ -587,6 +606,7 @@
     <item> Q_STATIC_TYPE </item>
     <item> Q_MOVABLE_TYPE </item>
     <item> Q_DUMMY_TYPE </item>
+    <item> Q_INTEGRAL_TYPE </item>
   </list>
 
   <list name="Qt4Classes">
@@ -1534,6 +1554,7 @@
     <item> qint16 </item>
     <item> qint32 </item>
     <item> qint64 </item>
+    <item> qintptr </item>
     <item> qlonglong </item>
     <item> qptrdiff </item>
     <item> qreal </item>
