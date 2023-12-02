@@ -40,6 +40,7 @@
 #include <QFile>
 #include <KConfigDialog>
 
+#include <algorithm>
 
 bool katesessions_compare_sessions(const QString &s1, const QString &s2) {
     return KStringHandler::naturalCompare(s1,s2)==-1;
@@ -147,7 +148,7 @@ void KateSessionApplet::initSessionFiles()
         QString name =  config.readEntry( "Name" );*/
         m_sessions.append( name );
     }
-    qSort(m_sessions.begin(),m_sessions.end(),katesessions_compare_sessions);
+    std::sort(m_sessions.begin(),m_sessions.end(),katesessions_compare_sessions);
     for(QStringList::ConstIterator it=m_sessions.constBegin();it!=m_sessions.constEnd();++it)
     {
         m_fullList << *it;

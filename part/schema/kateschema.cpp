@@ -32,6 +32,8 @@
 #include <kdebug.h>
 #include <kmenu.h>
 #include <kconfiggroup.h>
+
+#include <algorithm>
 //END
 
 //BEGIN KateSchemaManager
@@ -69,7 +71,7 @@ QList<KateSchema> KateSchemaManager::list ()
     schemas.append (schemaData (s));
     
   // sort: prio given by default schema and name
-  qSort(schemas.begin(), schemas.end(), schemasCompare);
+  std::sort(schemas.begin(), schemas.end(), schemasCompare);
     
   return schemas;
 }

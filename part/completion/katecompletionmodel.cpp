@@ -39,6 +39,8 @@
 #include "kateconfig.h"
 #include "codecompletionmodelcontrollerinterfacev4.h"
 
+#include <algorithm>
+
 using namespace KTextEditor;
 
 ///A helper-class for handling completion-models with hierarchical grouping/optimization
@@ -1505,9 +1507,9 @@ void KateCompletionModel::Group::addItem( Item i, bool notifyModel )
 
   if (model->isSortingEnabled()) {
     
-    prefilter.insert(qUpperBound(prefilter.begin(), prefilter.end(), i), i);
+    prefilter.insert(std::upper_bound(prefilter.begin(), prefilter.end(), i), i);
     if(i.isVisible()) {
-      QList<Item>::iterator it = qUpperBound(filtered.begin(), filtered.end(), i);
+      QList<Item>::iterator it = std::upper_bound(filtered.begin(), filtered.end(), i);
       uint rowNumber = it - filtered.begin();
       
       if(notifyModel)
@@ -1567,7 +1569,7 @@ void KateCompletionModel::setSortingAlphabetical( bool alphabetical )
 
 void KateCompletionModel::Group::resort( )
 {
-  qStableSort(filtered.begin(), filtered.end());
+  std::stable_sort(filtered.begin(), filtered.end());
   model->hideOrShowGroup(this);
 }
 

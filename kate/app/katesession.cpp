@@ -54,6 +54,7 @@
 #include <unistd.h>
 #include <time.h>
 
+#include <algorithm>
 
 bool katesessions_compare_sessions_ptr(const KateSession::Ptr &s1, const KateSession::Ptr &s2) {
     return KStringHandler::naturalCompare(s1->sessionName(),s2->sessionName())==-1;
@@ -254,7 +255,7 @@ void KateSessionManager::updateSessionList ()
     //kDebug () << "FOUND SESSION: " << session->sessionName() << " FILE: " << session->sessionFile() << " dir[i];" << dir[i];
   }
 
-  qSort(m_sessionList.begin(), m_sessionList.end(), katesessions_compare_sessions_ptr);
+  std::sort(m_sessionList.begin(), m_sessionList.end(), katesessions_compare_sessions_ptr);
 }
 
 bool KateSessionManager::activateSession (KateSession::Ptr session,

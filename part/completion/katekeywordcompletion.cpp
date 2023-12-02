@@ -26,6 +26,8 @@
 
 #include <KLocalizedString>
 
+#include <algorithm>
+
 KateKeywordCompletionModel::KateKeywordCompletionModel(QObject* parent)
     : CodeCompletionModel2(parent)
 {
@@ -76,7 +78,7 @@ void KateKeywordCompletionModel::completionInvoked(KTextEditor::View* view, cons
         }
     }
     m_items = items.toList();
-    qSort(m_items);
+    std::sort(m_items.begin(), m_items.end());
 }
 
 QModelIndex KateKeywordCompletionModel::parent(const QModelIndex& index) const

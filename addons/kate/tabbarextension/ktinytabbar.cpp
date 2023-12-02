@@ -37,7 +37,8 @@
 #include <kstringhandler.h>
 
 #include <QApplication> // QApplication::sendEvent
-#include <QtAlgorithms> // qSort
+
+#include <algorithm>
 
 KTinyTabBar::SortType global_sortType;
 
@@ -1125,7 +1126,7 @@ void KTinyTabBar::updateHelperButtons( QSize new_size, int needed_rows )
 void KTinyTabBar::updateSort()
 {
     global_sortType = tabSortType();
-    qSort( m_tabButtons.begin(), m_tabButtons.end(), tabLessThan );
+    std::sort( m_tabButtons.begin(), m_tabButtons.end(), tabLessThan );
     triggerResizeEvent();
 }
 

@@ -53,6 +53,8 @@
 #include <QtGui/QAction>
 #include <QtCore/QStringList>
 #include <QtCore/QTextStream>
+
+#include <algorithm>
 //END
 
 using namespace KTextEditor;
@@ -82,7 +84,7 @@ KateHlManager::KateHlManager()
   {
     KateHighlighting *hl = new KateHighlighting(modeList[i]);
 
-    hlList.insert (qLowerBound(hlList.begin(), hlList.end(), hl, compareKateHighlighting), hl);
+    hlList.insert (std::lower_bound(hlList.begin(), hlList.end(), hl, compareKateHighlighting), hl);
     hlDict.insert (hl->name(), hl);
   }
 

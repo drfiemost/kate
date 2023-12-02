@@ -39,6 +39,8 @@
 #include <QtCore/QEvent>
 #include <QtCore/QVector>
 
+#include <algorithm>
+
 namespace KTextEditor{ class Document; }
 
 KateBookmarks::KateBookmarks( KateView* view, Sorting sort )
@@ -146,7 +148,7 @@ void KateBookmarks::insertBookmarks( QMenu& menu )
 
   if ( m_sorting == Position )
   {
-    qSort(bookmarkLineArray.begin(), bookmarkLineArray.end());
+    std::sort(bookmarkLineArray.begin(), bookmarkLineArray.end());
   }
 
   QAction* firstNewAction = menu.addSeparator();

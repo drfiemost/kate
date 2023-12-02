@@ -42,6 +42,8 @@
 
 #include <ktexteditor/highlightinterface.h>
 
+#include <algorithm>
+
 static const QChar tabChar('\t');
 static const QChar spaceChar(' ');
 static const QChar nbSpaceChar(0xa0); // non-breaking space
@@ -361,7 +363,7 @@ QList<QTextLayout::FormatRange> KateRenderer::decorationsForLine( const Kate::Te
       bool anyDynamicHlsActive = m_view && (!rangesMouseIn->empty() || !rangesCaretIn->empty());
 
       // sort all ranges, we want that the most specific ranges win during rendering, multiple equal ranges are kind of random, still better than old smart rangs behavior ;)
-      qSort (rangesWithAttributes.begin(), rangesWithAttributes.end(), rangeLessThanForRenderer);
+      std::sort (rangesWithAttributes.begin(), rangesWithAttributes.end(), rangeLessThanForRenderer);
 
       // loop over all ranges
       for (int i = 0; i < rangesWithAttributes.size(); ++i) {

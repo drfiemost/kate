@@ -79,6 +79,8 @@
 
 #include <math.h>
 
+#include <algorithm>
+
 //BEGIN KateScrollBar
 static const int s_lineWidth = 100;
 static const int s_pixelMargin = 8;
@@ -2291,7 +2293,7 @@ void KateViewEncodingAction::Private::init()
     //tmp->setCheckable(true);
     actions << tmp;
   }
-  qSort(actions.begin(), actions.end(), lessThanAction);
+  std::sort(actions.begin(), actions.end(), lessThanAction);
   foreach (KSelectAction *action, actions)
     q->addAction(action);
 }

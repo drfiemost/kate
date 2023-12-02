@@ -25,7 +25,6 @@
 #include "spellcheck.h"
 
 #include <QHash>
-#include <QtAlgorithms>
 #include <QTimer>
 
 #include <kactioncollection.h>
@@ -34,6 +33,8 @@
 
 #include "katedocument.h"
 #include "katehighlight.h"
+
+#include <algorithm>
 
 KateSpellCheckManager::KateSpellCheckManager(QObject *parent)
 : QObject(parent)
@@ -122,7 +123,7 @@ QList<QPair<KTextEditor::Range, QString> > KateSpellCheckManager::spellCheckLang
     }
   }
   // finally, we still have to sort the list
-  qStableSort(toReturn.begin(), toReturn.end(), lessThanRangeDictionaryPair);
+  std::stable_sort(toReturn.begin(), toReturn.end(), lessThanRangeDictionaryPair);
   return toReturn;
 }
 

@@ -661,7 +661,7 @@ void KateViEmulatedCommandBar::activateWordFromDocumentCompletion()
     }
   }
   foundWords = QSet<QString>::fromList(foundWords).toList();
-  qSort(foundWords.begin(), foundWords.end(), caseInsensitiveLessThan);
+  std::sort(foundWords.begin(), foundWords.end(), caseInsensitiveLessThan);
   m_completionModel->setStringList(foundWords);
   updateCompletionPrefix();
   m_completer->complete();

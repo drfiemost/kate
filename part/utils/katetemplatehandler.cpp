@@ -35,6 +35,8 @@
 #include "script/katetemplatescript.h"
 #include "script/katescriptmanager.h"
 
+#include <algorithm>
+
 using namespace KTextEditor;
 
 #define ifDebug(x)
@@ -854,7 +856,7 @@ void KateTemplateHandler::handleTemplateString(const QMap< QString, QString >& i
     m_spacersMovingRanges.append(r);
   }
 
-  qSort(m_masterRanges.begin(), m_masterRanges.end(), cmp_moving_ranges);
+  std::sort(m_masterRanges.begin(), m_masterRanges.end(), cmp_moving_ranges);
 
   setCurrentRange(m_templateRanges.first());
   mirrorBehaviourBuildHelper.clear();
