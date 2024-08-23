@@ -38,6 +38,8 @@
 #include <ktexteditor/view.h>
 #include "katerenderer.h"
 
+#include <algorithm>
+
 using KTextEditor::Cursor;
 using KTextEditor::Range;
 
@@ -245,7 +247,7 @@ Range KateViModeBase::findPattern(const QString& pattern, bool backwards, bool c
         }
 
         // After sorting, the last element in matchesUnfiltered is the last match position.
-        qSort(matchesUnfiltered);
+        std::sort(matchesUnfiltered.begin(), matchesUnfiltered.end());
 
         QVector<Range> filteredMatches;
         foreach(Range unfilteredMatch, matchesUnfiltered)
