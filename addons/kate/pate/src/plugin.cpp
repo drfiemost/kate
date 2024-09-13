@@ -40,7 +40,7 @@
 #include <KConfigBase>
 #include <KConfigGroup>
 #include <KDialog>
-#include <KGenericFactory>
+#include <KPluginFactory>
 #include <KLocale>
 #include <KPassivePopup>
 #include <KTextEdit>
