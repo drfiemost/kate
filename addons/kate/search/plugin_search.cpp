@@ -746,10 +746,10 @@ void KatePluginSearchView::matchFound(const QString &url, const QString &fName, 
         return;
     }
 
-    QString pre = Qt::escape(lineContent.left(column));
-    QString match = Qt::escape(lineContent.mid(column, matchLen));
+    QString pre = lineContent.left(column).toHtmlEscaped();
+    QString match = lineContent.mid(column, matchLen).toHtmlEscaped();
     match.replace('\n', "\\n");
-    QString post = Qt::escape(lineContent.mid(column + matchLen));
+    QString post = lineContent.mid(column + matchLen).toHtmlEscaped();
     QStringList row;
     row << i18n("Line: <b>%1</b>: %2", line+1, pre+"<b>"+match+"</b>"+post);
 

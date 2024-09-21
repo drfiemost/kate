@@ -22,7 +22,7 @@
 #include "katelayoutcache.h"
 #include "katelayoutcache.moc"
 
-#include <QtAlgorithms>
+#include <algorithm>
 
 #include "katerenderer.h"
 #include "kateview.h"
@@ -55,15 +55,14 @@ void KateLineLayoutMap::clear()
 
 bool KateLineLayoutMap::contains(int i) const
 {
-  LineLayoutMap::const_iterator it =
-    qBinaryFind(m_lineLayouts.constBegin(), m_lineLayouts.constEnd(), LineLayoutPair(i,KateLineLayoutPtr()), lessThan);
-  return (it != m_lineLayouts.constEnd());
+  return
+    std::binary_search(m_lineLayouts.constBegin(), m_lineLayouts.constEnd(), LineLayoutPair(i,KateLineLayoutPtr()), lessThan);
 }
 
 void KateLineLayoutMap::insert(int realLine, const KateLineLayoutPtr& lineLayoutPtr)
 {
   LineLayoutMap::iterator it =
-    qBinaryFind(m_lineLayouts.begin(), m_lineLayouts.end(), LineLayoutPair(realLine,KateLineLayoutPtr()), lessThan);
+    std::lower_bound(m_lineLayouts.begin(), m_lineLayouts.end(), LineLayoutPair(realLine,KateLineLayoutPtr()), lessThan);
   if (it != m_lineLayouts.end()) {
     (*it).second = lineLayoutPtr;
   } else {
@@ -134,7 +133,7 @@ void KateLineLayoutMap::slotEditDone(int fromLine, int toLine, int shiftAmount)
 KateLineLayoutPtr& KateLineLayoutMap::operator[](int i)
 {
   LineLayoutMap::iterator it =
-    qBinaryFind(m_lineLayouts.begin(), m_lineLayouts.end(), LineLayoutPair(i, KateLineLayoutPtr()), lessThan);
+    std::lower_bound(m_lineLayouts.begin(), m_lineLayouts.end(), LineLayoutPair(i, KateLineLayoutPtr()), lessThan);
   return (*it).second;
 }
 //END KateLineLayoutMap
