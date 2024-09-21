@@ -1340,6 +1340,7 @@
     <item> QValidator </item>
     <item> QVariant </item>
     <item> QVariantAnimation </item>
+    <item> QVariantList </item>
     <item> QVarLengthArray </item>
     <item> QVBoxLayout </item>
     <item> QVector </item>
