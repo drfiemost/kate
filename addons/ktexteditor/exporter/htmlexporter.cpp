@@ -81,7 +81,7 @@ void HTMLExporter::closeLine(const bool lastLine)
 void HTMLExporter::exportText(const QString& text, const KTextEditor::Attribute::Ptr& attrib)
 {
   if ( !attrib || !attrib->hasAnyProperty() || attrib == m_defaultAttribute ) {
-    m_output << Qt::escape(text);
+    m_output << text.toHtmlEscaped();
     return;
   }
 
@@ -103,7 +103,7 @@ void HTMLExporter::exportText(const QString& text, const KTextEditor::Attribute:
                   .arg(writeBackground ? QString(QLatin1String("background:") + attrib->background().color().name() + QLatin1Char(';')) : QString());
   }
 
-  m_output << Qt::escape(text);
+  m_output << text.toHtmlEscaped();
 
   if ( writeBackground || writeForeground ) {
     m_output << "</span>";
