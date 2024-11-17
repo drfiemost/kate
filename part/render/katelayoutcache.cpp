@@ -63,7 +63,7 @@ void KateLineLayoutMap::insert(int realLine, const KateLineLayoutPtr& lineLayout
 {
   LineLayoutMap::iterator it =
     std::lower_bound(m_lineLayouts.begin(), m_lineLayouts.end(), LineLayoutPair(realLine,KateLineLayoutPtr()), lessThan);
-  if (it != m_lineLayouts.end()) {
+  if (it != m_lineLayouts.end() && (*it) == LineLayoutPair(realLine, KateLineLayoutPtr())) {
     (*it).second = lineLayoutPtr;
   } else {
     it = std::upper_bound(m_lineLayouts.begin(), m_lineLayouts.end(), LineLayoutPair(realLine,KateLineLayoutPtr()), lessThan);
@@ -134,6 +134,7 @@ KateLineLayoutPtr& KateLineLayoutMap::operator[](int i)
 {
   LineLayoutMap::iterator it =
     std::lower_bound(m_lineLayouts.begin(), m_lineLayouts.end(), LineLayoutPair(i, KateLineLayoutPtr()), lessThan);
+  Q_ASSERT(it != m_lineLayouts.end());
   return (*it).second;
 }
 //END KateLineLayoutMap
@@ -172,34 +173,23 @@ void KateLayoutCache::updateViewCache(const KTextEditor::Cursor& startPos, int n
     realLine = m_renderer->folding().visibleLineToLine(m_renderer->folding().lineToVisibleLine(startPos.line()));
   else
     realLine = m_renderer->folding().visibleLineToLine(startPos.line());
+
+  // compute the correct view line
   int _viewLine = 0;
-
   if (wrap()) {
-    // TODO check these assumptions are ok... probably they don't give much speedup anyway?
-    if (startPos == m_startPos && m_textLayouts.count()) {
-      _viewLine = m_textLayouts.first().viewLine();
+    if (KateLineLayoutPtr l = line(realLine)) {
+            Q_ASSERT(l->isValid());
+            Q_ASSERT(l->length() >= startPos.column() || m_renderer->view()->wrapCursor());
+            bool found = false;
+            for (; _viewLine < l->viewLineCount(); ++_viewLine) {
+                const KateTextLayout &t = l->viewLine(_viewLine);
+                if (t.startCol() >= startPos.column() || _viewLine == l->viewLineCount() - 1) {
+                    found = true;
+                    break;
+                }
+            }
 
-    } else if (viewLinesScrolled > 0 && viewLinesScrolled < m_textLayouts.count()) {
-      _viewLine = m_textLayouts[viewLinesScrolled].viewLine();
-
-    } else {
-      KateLineLayoutPtr l = line(realLine);
-      if (l) {
-        Q_ASSERT(l->isValid());
-        Q_ASSERT(l->length() >= startPos.column() || m_renderer->view()->wrapCursor());
-
-        for (; _viewLine < l->viewLineCount(); ++_viewLine) {
-          const KateTextLayout& t = l->viewLine(_viewLine);
-          if (t.startCol() >= startPos.column() || _viewLine == l->viewLineCount() - 1)
-            goto foundViewLine;
-        }
-
-        // FIXME FIXME need to calculate past-end-of-line position here...
-        Q_ASSERT(false);
-
-        foundViewLine:
-        Q_ASSERT(true);
-      }
+        Q_ASSERT(found);
     }
   }
 
@@ -219,15 +209,7 @@ void KateLayoutCache::updateViewCache(const KTextEditor::Cursor& startPos, int n
   // Resize functionality
   if (newViewLineCount > oldViewLineCount) {
     m_textLayouts.reserve(newViewLineCount);
-
   } else if (newViewLineCount < oldViewLineCount) {
-    /* FIXME reintroduce... check we're not missing any
-    int lastLine = m_textLayouts[newSize - 1].line();
-    for (int i = oldSize; i < newSize; i++) {
-      const KateTextLayout& layout = m_textLayouts[i];
-      if (layout.line() > lastLine && !layout.viewLine())
-        layout.kateLineLayout()->layout()->setCacheEnabled(false);
-    }*/
     m_textLayouts.resize(newViewLineCount);
   }
 
@@ -337,22 +319,11 @@ KateLineLayoutPtr KateLayoutCache::line( const KTextEditor::Cursor & realCursor 
 
 KateTextLayout KateLayoutCache::textLayout( const KTextEditor::Cursor & realCursor )
 {
-  /*if (realCursor >= viewCacheStart() && (realCursor < viewCacheEnd() || realCursor == viewCacheEnd() && !m_textLayouts.last().wrap()))
-    foreach (const KateTextLayout& l, m_textLayouts)
-      if (l.line() == realCursor.line() && (l.endCol() < realCursor.column() || !l.wrap()))
-        return l;*/
-
   return line(realCursor.line())->viewLine(viewLine(realCursor));
 }
 
 KateTextLayout KateLayoutCache::textLayout( uint realLine, int _viewLine )
 {
-  /*if (m_textLayouts.count() && (realLine >= m_textLayouts.first().line() && _viewLine >= m_textLayouts.first().viewLine()) &&
-      (realLine <= m_textLayouts.last().line() && _viewLine <= m_textLayouts.first().viewLine()))
-    foreach (const KateTextLayout& l, m_textLayouts)
-      if (l.line() == realLine && l.viewLine() == _viewLine)
-        return const_cast<KateTextLayout&>(l);*/
-
   return line(realLine)->viewLine(_viewLine);
 }
 
@@ -389,9 +360,13 @@ int KateLayoutCache::viewWidth( ) const
  */
 int KateLayoutCache::viewLine(const KTextEditor::Cursor& realCursor)
 {
-  if (realCursor.column() <= 0 || realCursor.line() < 0) return 0;
+    /**
+     * Make sure cursor column and line is valid
+     */
+    if (realCursor.column() < 0 || realCursor.line() < 0 || realCursor.line() > m_renderer->doc()->lines()) {
+      return 0;
+    }
 
-  Q_ASSERT(realCursor.line() < m_renderer->doc()->lines());
   KateLineLayoutPtr thisLine = line(realCursor.line());
 
   for (int i = 0; i < thisLine->viewLineCount(); ++i) {
