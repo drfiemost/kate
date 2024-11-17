@@ -134,7 +134,7 @@ KateCompletionWidget::KateCompletionWidget(KateView* parent)
 
   m_entryList->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
 
-  m_argumentHintTree->setParent(0, Qt::ToolTip);
+  m_argumentHintTree->setParent(nullptr, Qt::ToolTip);
   m_argumentHintTree->setModel(m_argumentHintModel);
 
   // trigger completion on double click on completion list  
@@ -179,6 +179,8 @@ KateCompletionWidget::KateCompletionWidget(KateView* parent)
 }
 
 KateCompletionWidget::~KateCompletionWidget() {
+    delete m_argumentHintTree;
+    m_argumentHintTree = nullptr;
 }
 
 void KateCompletionWidget::viewFocusOut() {

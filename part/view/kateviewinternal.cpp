@@ -244,12 +244,6 @@ KateViewInternal::~KateViewInternal ()
   delete m_bmEnd;
 }
 
-void KateViewInternal::prepareForDynWrapChange()
-{
-  // Which is the current view line?
-  m_wrapChangeViewLine = cache()->displayViewLine(m_displayCursor, true);
-}
-
 void KateViewInternal::dynWrapChanged()
 {
   m_dummy->setFixedSize(m_lineScroll->width(), m_columnScroll->sizeHint().height());
@@ -272,14 +266,7 @@ void KateViewInternal::dynWrapChanged()
   if (m_view->dynWordWrap())
     scrollColumns(0);
 
-  // Determine where the cursor should be to get the cursor on the same view line
-  if (m_wrapChangeViewLine != -1) {
-    KTextEditor::Cursor newStart = viewLineOffset(m_displayCursor, -m_wrapChangeViewLine);
-    makeVisible(newStart, newStart.column(), true);
-
-  } else {
-    update();
-  }
+  update();
 }
 
 KTextEditor::Cursor KateViewInternal::endPos() const
@@ -2616,7 +2603,12 @@ void KateViewInternal::mousePressEvent( QMouseEvent* e )
               else
                 m_selectAnchor = m_selectionCached.start();
             }
+
+            // update selection and do potential clipboard update, see bug 443642
             setSelection( KTextEditor::Range( m_selectAnchor, m_cursor ) );
+            if (view()->selection()) {
+                QApplication::clipboard()->setText(view()->selectionText(), QClipboard::Selection);
+            }
           }
           else
           {

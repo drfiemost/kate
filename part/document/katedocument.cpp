@@ -3871,7 +3871,7 @@ bool KateDocument::documentReload()
       setActiveView(*it);
       (*it)->setCursorPositionInternal( cursorPositions.at(i), m_config->tabWidth(), false );
       if ((*it)->isVisible()) {
-        (*it)->repaintText(false);
+        (*it)->repaint();
       }
     }
     setActiveView(oldActiveView);

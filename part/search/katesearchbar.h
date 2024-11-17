@@ -201,6 +201,7 @@ private:
 
     // Power search related
     Ui::PowerSearchBar * m_powerUi;
+    QString m_replacement;
 
     // attribute to highlight matches with
     KTextEditor::Attribute::Ptr highlightMatchAttribute;

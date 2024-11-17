@@ -131,7 +131,6 @@ class KateViewInternal : public QWidget
 
     KateTextLayout yToKateTextLayout(int y) const;
 
-    void prepareForDynWrapChange();
     void dynWrapChanged();
 
   public Q_SLOTS:
@@ -365,7 +364,6 @@ class KateViewInternal : public QWidget
     bool m_preserveX;
     int m_preservedX;
 
-    int m_wrapChangeViewLine;
     KTextEditor::Cursor m_cachedMaxStartPos;
 
   //
