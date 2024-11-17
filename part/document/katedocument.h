@@ -929,6 +929,12 @@ Q_SIGNALS:
 
   public:
     /**
+     * This function doesn't check for config and is
+     * available for use all the time via an action
+     */
+    void removeAllTrailingSpaces();
+
+    /**
      * md5 digest of this document
      * @return md5 digest for this document
      */

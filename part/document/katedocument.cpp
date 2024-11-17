@@ -4500,6 +4500,19 @@ void KateDocument::removeTrailingSpaces()
 }
 
 
+void KateDocument::removeAllTrailingSpaces()
+{
+    const int lines = this->lines();
+    for (int line = 0; line < lines; ++line) {
+        const Kate::TextLine textline = plainKateTextLine(line);
+        const int p = textline->lastChar() + 1;
+        const int l = textline->length() - p;
+        if (l > 0) {
+            editRemoveText(line, p, l);
+        }
+    }
+}
+
 void KateDocument::updateFileType (const QString &newType, bool user)
 {
   if (user || !m_fileTypeSetByUser)
