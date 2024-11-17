@@ -616,7 +616,7 @@ KTextEditor::Range KateBuffer::computeFoldingRangeForStartLine (int startLine)
   /**
    * first step: search the first region type, that stays open for the start line
    */
-  short openedRegionType = 0;
+  short openedRegionType = -1;
   int openedRegionOffset = -1;
   {
     /**
@@ -676,7 +676,7 @@ KTextEditor::Range KateBuffer::computeFoldingRangeForStartLine (int startLine)
   /**
    * no opening region found, bad, nothing to do
    */
-  if (openedRegionType == 0)
+  if (openedRegionType == -1)
     return KTextEditor::Range::invalid();
 
   /**

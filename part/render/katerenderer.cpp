@@ -43,6 +43,7 @@
 #include <ktexteditor/highlightinterface.h>
 
 #include <algorithm>
+#include <cmath>
 
 static const QChar tabChar('\t');
 static const QChar spaceChar(' ');
@@ -1076,7 +1077,7 @@ KTextEditor::Cursor KateRenderer::xToCursor(const KateTextLayout & range, int x,
 
   // TODO wrong for RTL lines?
   if (returnPastLine && range.endCol(true) == -1 && x > range.width() + range.xOffset())
-    ret.setColumn(ret.column() + ((x - (range.width() + range.xOffset())) / spaceWidth()));
+    ret.setColumn(ret.column() + std::round((x - (range.width() + range.xOffset())) / spaceWidth()));
 
   return ret;
 }
