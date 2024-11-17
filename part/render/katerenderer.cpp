@@ -213,7 +213,8 @@ void KateRenderer::paintTextLineBackground(QPainter& paint, KateLineLayoutPtr la
     backgroundColor.setRgb(
       int((backgroundColor.red() * 0.9) + (markRed * 0.1)),
       int((backgroundColor.green() * 0.9) + (markGreen * 0.1)),
-      int((backgroundColor.blue() * 0.9) + (markBlue * 0.1))
+      int((backgroundColor.blue() * 0.9) + (markBlue * 0.1)),
+      backgroundColor.alpha()
     );
   }
 
@@ -221,7 +222,8 @@ void KateRenderer::paintTextLineBackground(QPainter& paint, KateLineLayoutPtr la
   paint.fillRect(0, 0, xEnd - xStart, lineHeight() * layout->viewLineCount(), backgroundColor);
 
   // paint the current line background if we're on the current line
-  if (currentViewLine != -1) {
+  const bool currentLineHasSelection = m_view && m_view->selection() && m_view->selectionRange().overlapsLine(layout->line());
+    if (currentViewLine != -1 && !currentLineHasSelection) {
     if (markCount) {
       markRed /= markCount;
       markGreen /= markCount;
@@ -229,7 +231,8 @@ void KateRenderer::paintTextLineBackground(QPainter& paint, KateLineLayoutPtr la
       currentLineColor.setRgb(
         int((currentLineColor.red() * 0.9) + (markRed * 0.1)),
         int((currentLineColor.green() * 0.9) + (markGreen * 0.1)),
-        int((currentLineColor.blue() * 0.9) + (markBlue * 0.1))
+        int((currentLineColor.blue() * 0.9) + (markBlue * 0.1)),
+        currentLineColor.alpha()
       );
     }
 
@@ -301,18 +304,12 @@ void KateRenderer::paintIndentMarker(QPainter &paint, uint x, uint y /*row*/)
   QPen myPen(config()->indentationLineColor());
   static const QVector<qreal> dashPattern = QVector<qreal>() << 1 << 1;
   myPen.setDashPattern(dashPattern);
-  if (y % 2)
-    myPen.setDashOffset(1);
   paint.setPen(myPen);
-
-  const int height = fontHeight();
-  const int top = 0;
-  const int bottom = height-1;
 
   QPainter::RenderHints renderHints = paint.renderHints();
   paint.setRenderHints(renderHints, false);
 
-  paint.drawLine(x + 2, top, x + 2, bottom);
+  paint.drawLine(x + 2, 0, x + 2, lineHeight());
 
   paint.setRenderHints(renderHints, true);
 
@@ -687,16 +684,18 @@ void KateRenderer::paintTextLine(QPainter& paint, KateLineLayoutPtr range, int x
           }
         }
       }
-    }
 
-    // draw word-wrap-honor-indent filling
-    if ( (range->viewLineCount() > 1)  && range->shiftX() && (range->shiftX() > xStart) )
-    {
-      if (backgroundBrushSet)
-        paint.fillRect(0, lineHeight(), range->shiftX() - xStart, lineHeight() * (range->viewLineCount() - 1),
-          backgroundBrush);
-      paint.fillRect(0, lineHeight(), range->shiftX() - xStart, lineHeight() * (range->viewLineCount() - 1),
-        QBrush(config()->wordWrapMarkerColor(), Qt::Dense4Pattern));
+      // draw word-wrap-honor-indent filling
+      if ((i > 0) && range->shiftX() && (range->shiftX() > xStart)) {
+          // fill background first with selection if we had selection from the previous line
+          if (drawSelection && !m_view->blockSelection() && m_view->selectionRange().start() < line.start()
+              && m_view->selectionRange().end() >= line.start()) {
+              paint.fillRect(0, lineHeight() * i, range->shiftX() - xStart, lineHeight(), QBrush(config()->selectionColor()));
+          }
+
+          // paint the normal filling for the word wrap markers
+          paint.fillRect(0, lineHeight() * i, range->shiftX() - xStart, lineHeight(), QBrush(config()->wordWrapMarkerColor(), Qt::Dense4Pattern));
+      }
     }
 
     // Draw caret
