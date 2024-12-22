@@ -78,6 +78,8 @@
     <item> QTEST_APPLESS_MAIN </item>
     <item> QTEST_MAIN </item>
     <item> QTEST_NOOP_MAIN </item>
+    <item> QTRY_COMPARE </item>
+    <item> QTRY_VERIFY </item>
     <item> QVERIFY2 </item>
     <item> QVERIFY </item>
     <item> QWARN </item>
