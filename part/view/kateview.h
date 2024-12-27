@@ -443,7 +443,7 @@ class KATEPART_TESTS_EXPORT KateView : public KTextEditor::View,
     */
     void joinLines();
 
-    void removeTrailingSplaces();
+    void removeTrailingSpaces();
 
     // Note - the following functions simply forward to KateViewInternal
     void keyReturn();

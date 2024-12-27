@@ -460,9 +460,9 @@ void KateView::setupActions()
     a->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Space));
     connect(a, SIGNAL(triggered(bool)), SLOT(userInvokedCompletion()));
 
-    a = ac->addAction("remove_trailing_spaces");
+    a = ac->addAction("tools_remove_trailing_spaces");
     a->setText(i18n("Remove Trailing Spaces"));
-    connect(a, SIGNAL(triggered(bool)), SLOT(removeTrailingSplaces()));
+    connect(a, SIGNAL(triggered(bool)), SLOT(removeTrailingSpaces()));
 
     a = ac->addAction( "tools_create_snippet" );
     a->setIcon (KIcon("document-new"));
@@ -1358,7 +1358,7 @@ void KateView::joinLines()
   m_doc->joinLines( first, last );
 }
 
-void KateView::removeTrailingSplaces() {
+void KateView::removeTrailingSpaces() {
   m_doc->removeAllTrailingSpaces();
 }
 

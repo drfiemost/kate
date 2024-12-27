@@ -61,6 +61,7 @@
     <Separator group="tools_operations" />
     <Action name="tools_join_lines" group="tools_operations" />
     <Action name="tools_apply_wordwrap" group="tools_operations" />
+    <Action name="tools_remove_trailing_spaces" group="tools_operations" />
   </Menu>
 
   <Menu name="settings" noMerge="1"><text>&amp;Settings</text>
