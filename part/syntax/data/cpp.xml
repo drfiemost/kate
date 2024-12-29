@@ -1468,6 +1468,7 @@
     <item> qMax </item>
     <item> qMin </item>
     <item> qPrintable </item>
+    <item> qUtf8Printable </item>
     <item> qRound64 </item>
     <item> qRound </item>
     <item> qVersion </item>
@@ -1478,9 +1479,6 @@
     <item> qsrand </item>
     <item> qtTrId </item>
     <item> qt_set_sequence_auto_mnemonic </item>
-    <item> qt_symbian_exception2Error </item>
-    <item> qt_symbian_exception2LeaveL </item>
-    <item> qt_symbian_throwIfError </item>
     <!-- Global functions list from http://qt-project.org/doc/qt-4.8/qtalgorithms.html -->
     <item> qBinaryFind </item>
     <item> qCopy </item>
@@ -1537,10 +1535,6 @@
     <item> qmlRegisterType </item>
     <item> qmlRegisterTypeNotAvailable </item>
     <item> qmlRegisterUncreatableType </item>
-    <!-- http://qt-project.org/doc/qt-4.8/qwebpage.html#related-non-members -->
-    <item> qWebKitMajorVersion </item>
-    <item> qWebKitMinorVersion </item>
-    <item> qWebKitVersion </item>
     <!-- http://qt-project.org/doc/qt-4.8/qextensionmanager.html#related-non-members -->
     <item> qt_extension </item>
     <!-- http://qt-project.org/doc/qt-4.8/qdbusargument.html#related-non-members -->
@@ -1567,6 +1561,7 @@
     <item> quint64 </item>
     <item> quintptr </item>
     <item> qulonglong </item>
+    <item> qsizetype </item>
     <item> uchar </item>
     <item> uint </item>
     <item> ulong </item>
