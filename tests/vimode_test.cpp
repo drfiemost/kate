@@ -3961,7 +3961,7 @@ void ViModeTest::VimStyleCommandBarTests()
   const QPoint completerRectTopLeft = emulatedCommandBarCompleter()->popup()->mapToGlobal(emulatedCommandBarCompleter()->popup()->rect().topLeft()) ;
   const QPoint barEditBottomLeft = emulatedCommandBarTextEdit()->mapToGlobal(emulatedCommandBarTextEdit()->rect().bottomLeft());
   QCOMPARE(completerRectTopLeft.x(), barEditBottomLeft.x());
-  QVERIFY(qAbs(completerRectTopLeft.y() - barEditBottomLeft.y()) <= 1);
+  QVERIFY(std::abs(completerRectTopLeft.y() - barEditBottomLeft.y()) <= 1);
   // Will activate the current completion item, activating the search, and dismissing the bar.
   TestPressKey("\\enter");
   QVERIFY(!emulatedCommandBarCompleter()->popup()->isVisible());

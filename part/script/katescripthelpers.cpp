@@ -167,7 +167,7 @@ QScriptValue debug(QScriptContext *context, QScriptEngine *engine)
 KLocalizedString substituteArguments( const KLocalizedString &kls, const QVariantList &arguments, int max = 99 )
 {
   KLocalizedString ls = kls;
-  int cnt = qMin( arguments.count(), max ); // QString supports max 99
+  int cnt = std::min( arguments.count(), max ); // QString supports max 99
   for ( int i = 0; i < cnt; ++i ) {
     QVariant arg = arguments[i];
     switch ( arg.type() ) {

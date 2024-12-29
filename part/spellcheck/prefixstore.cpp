@@ -176,7 +176,7 @@ int KatePrefixStore::computeLongestPrefixLength()
   for(QSet<QString>::iterator i = m_prefixSet.begin();
       i != m_prefixSet.end(); ++i) {
       kDebug() << "length" << (*i).length();
-    toReturn = qMax(toReturn, (*i).length());
+    toReturn = std::max(toReturn, (*i).length());
   }
   return toReturn;
 }

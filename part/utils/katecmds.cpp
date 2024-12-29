@@ -629,8 +629,8 @@ bool KateCommands::ViCommands::exec(KTextEditor::View *view,
 
     int count = 1;
     if (range.isValid()){
-        count = qAbs(range.end().line() - range.start().line())+1;
-        v->setCursorPosition(KTextEditor::Cursor(qMin(range.start().line(),
+        count = std::abs(range.end().line() - range.start().line())+1;
+        v->setCursorPosition(KTextEditor::Cursor(std::min(range.start().line(),
                                                       range.end().line()),0));
     }
 
@@ -682,7 +682,7 @@ bool KateCommands::ViCommands::exec(KTextEditor::View *view,
         int line;
         if ( (r >= 'a' && r <= 'z') || r == '_' || r == '+' || r == '*' ) {
             if (range.isValid())
-                line = qMax(range.end().line(),range.start().line());
+                line = std::max(range.end().line(),range.start().line());
             else
                 line = v->cursorPosition().line();
 

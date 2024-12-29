@@ -425,7 +425,7 @@ void KateScrollBar::updatePixmap()
           pixelX++;
         }
         else if (lineText[x] == '\t') {
-          pixelX += qMax(4/charIncrement, 1); // FIXME: tab width...
+          pixelX += std::max(4/charIncrement, 1); // FIXME: tab width...
         }
         else {
           painter.setPen(charColor(attributes, attributeIndex, decorations, defaultTextColor, x, lineText[x]));
@@ -520,13 +520,13 @@ void KateScrollBar::miniMapPaintEvent(QPaintEvent *e)
   //style()->drawControl(QStyle::CE_ScrollBarSubLine, &opt, &painter, this);
 
   // calculate the document size and position
-  int docHeight = qMin(grooveRect.height(), m_pixmap.height()*2) - 2*docXMargin;
+  int docHeight = std::min(grooveRect.height(), m_pixmap.height()*2) - 2*docXMargin;
   int yoffset = 1; // top-aligned in stead of center-aligned (grooveRect.height() - docHeight) / 2;
   QRect docRect(QPoint(grooveRect.left()+docXMargin, yoffset+grooveRect.top()), QSize(grooveRect.width()-2*docXMargin, docHeight));
   m_mapGroveRect = docRect;
 
   // calculate the visible area
-  int max = qMax(maximum()+1, 1);
+  int max = std::max(maximum()+1, 1);
   int visibleStart = value()*docHeight/(max+pageStep()) + docRect.top();
   int visibleEnd = (value()+pageStep())*docHeight/(max+pageStep()) + docRect.top();
   QRect visibleRect = docRect;
@@ -1428,7 +1428,7 @@ void KateIconBorder::updateFont()
   // 48 is ascii '0'
   for (int i = 48; i < 58; i++) {
     const qreal charWidth = ceil(fm.width( QChar(i) ));
-    m_maxCharWidth = qMax(m_maxCharWidth, charWidth);
+    m_maxCharWidth = std::max(m_maxCharWidth, charWidth);
   }
 
   // the icon pane scales with the font...
@@ -1447,7 +1447,7 @@ int KateIconBorder::lineNumberWidth() const
 
   if (m_view->dynWordWrap() && m_dynWrapIndicatorsOn) {
     // HACK: 16 == style().scrollBarExtent().width()
-    width = qMax(16 + 4, width);
+    width = std::max(16 + 4, width);
 
     if (m_cachedLNWidth != width || m_oldBackgroundColor != m_view->renderer()->config()->iconBarColor()) {
       int w = 16;// HACK: 16 == style().scrollBarExtent().width() style().scrollBarExtent().width();
@@ -1492,7 +1492,7 @@ static void paintTriangle (QPainter &painter, QColor c, int xOffset, int yOffset
 {
   painter.setRenderHint(QPainter::Antialiasing);
 
-  qreal size = qMin (width, height);
+  qreal size = std::min (width, height);
 
   if ( KColorUtils::luma( c ) > 0.25 )
     c = KColorUtils::darken( c );
@@ -1887,7 +1887,7 @@ void KateIconBorder::showBlock()
    * FIXME: optimize + perhaps have some better threshold or use timers!
    */
   KTextEditor::Range newRange = KTextEditor::Range::invalid();
-  for (int line = m_currentBlockLine; line >= qMax(0, m_currentBlockLine-1024); --line) {
+  for (int line = m_currentBlockLine; line >= std::max(0, m_currentBlockLine-1024); --line) {
     /**
      * try if we have folding range from that line, should be fast per call
      */

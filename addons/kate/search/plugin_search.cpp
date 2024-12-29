@@ -1475,20 +1475,20 @@ void KatePluginSearchView::writeSessionConfig(KConfigBase* config, const QString
     cg.writeEntry("FollowSymLink", m_ui.symLinkCheckBox->isChecked());
     cg.writeEntry("BinaryFiles", m_ui.binaryCheckBox->isChecked());
     QStringList folders;
-    for (int i=0; i<qMin(m_ui.folderRequester->comboBox()->count(), 10); i++) {
+    for (int i=0; i<std::min(m_ui.folderRequester->comboBox()->count(), 10); i++) {
         folders << m_ui.folderRequester->comboBox()->itemText(i);
     }
     cg.writeEntry("SearchDiskFiless", folders);
     cg.writeEntry("SearchDiskFiles", m_ui.folderRequester->text());
     QStringList filterItems;
-    for (int i=0; i<qMin(m_ui.filterCombo->count(), 10); i++) {
+    for (int i=0; i<std::min(m_ui.filterCombo->count(), 10); i++) {
         filterItems << m_ui.filterCombo->itemText(i);
     }
     cg.writeEntry("Filters", filterItems);
     cg.writeEntry("CurrentFilter", m_ui.filterCombo->currentIndex());
 
     QStringList excludeFilterItems;
-    for (int i=0; i<qMin(m_ui.excludeCombo->count(), 10); i++) {
+    for (int i=0; i<std::min(m_ui.excludeCombo->count(), 10); i++) {
         excludeFilterItems << m_ui.excludeCombo->itemText(i);
     }
     cg.writeEntry("ExcludeFilters", excludeFilterItems);

@@ -205,7 +205,7 @@ void KateWordCompletionModel::completionInvoked(KTextEditor::View* view, const K
 QStringList KateWordCompletionModel::allMatches( KTextEditor::View *view, const KTextEditor::Range &range ) const
 {
   QSet<QString> result;
-  const int minWordSize = qMax(2, qobject_cast<KateView*>(view)->config()->wordCompletionMinimalWordLength());
+  const int minWordSize = std::max(2, qobject_cast<KateView*>(view)->config()->wordCompletionMinimalWordLength());
   const int lines = view->document()->lines();
   for ( int line = 0; line < lines; line++ ) {
     const QString& text = view->document()->line(line);

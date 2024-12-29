@@ -65,8 +65,8 @@ void KateViRange::normalize()
       startColumn = ec;
       endColumn = sc;
       } else {
-          startColumn = qMin(sc, ec);
-          endColumn = qMax(sc, ec);
+          startColumn = std::min(sc, ec);
+          endColumn = std::max(sc, ec);
       }
   }
 }

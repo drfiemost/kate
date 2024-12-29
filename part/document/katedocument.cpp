@@ -684,13 +684,13 @@ bool KateDocument::removeText ( const KTextEditor::Range &_range, bool block )
   } // if ( ! block )
   else
   {
-    int startLine = qMax(0, range.start().line());
+    int startLine = std::max(0, range.start().line());
     int vc1 = toVirtualColumn(range.start());
     int vc2 = toVirtualColumn(range.end());
-    for (int line = qMin(range.end().line(), lastLine()); line >= startLine; --line) {
+    for (int line = std::min(range.end().line(), lastLine()); line >= startLine; --line) {
       int col1 = fromVirtualColumn(line, vc1);
       int col2 = fromVirtualColumn(line, vc2);
-      editRemoveText(line, qMin(col1, col2), qAbs(col2 - col1));
+      editRemoveText(line, std::min(col1, col2), std::abs(col2 - col1));
     }
   }
 
@@ -900,7 +900,7 @@ bool KateDocument::wrapText(int startLine, int endLine)
           break;
       }
 
-      const int colInChars = qMin (z2, l->length()-1);
+      const int colInChars = std::min (z2, l->length()-1);
       int searchStart = colInChars;
 
       // If where we are wrapping is an end of line and is a space we don't
@@ -1034,7 +1034,7 @@ bool KateDocument::editRemoveText ( int line, int col, int len )
     return false;
 
   // don't try to remove what's not there
-  len = qMin(len, l->text().size() - col);
+  len = std::min(len, l->text().size() - col);
 
   editStart ();
 
@@ -2619,7 +2619,7 @@ bool KateDocument::typeChars ( KateView *view, const QString &realChars )
   if (config()->ovr()
       || (view->viInputMode() && view->getViInputModeManager()->getCurrentViMode() == ReplaceMode)) {
 
-    KTextEditor::Range r = KTextEditor::Range(view->cursorPosition(), qMin(chars.length(),
+    KTextEditor::Range r = KTextEditor::Range(view->cursorPosition(), std::min(chars.length(),
           textLine->length() - view->cursorPosition().column()));
 
     // replace mode needs to know what was removed so it can be restored with backspace
@@ -2634,8 +2634,8 @@ bool KateDocument::typeChars ( KateView *view, const QString &realChars )
 
   if (view->blockSelection() && view->selection()) {
     KTextEditor::Range selectionRange = view->selectionRange();
-    int startLine = qMax(0, selectionRange.start().line());
-    int endLine = qMin(selectionRange.end().line(), lastLine());
+    int startLine = std::max(0, selectionRange.start().line());
+    int endLine = std::min(selectionRange.end().line(), lastLine());
     int column = toVirtualColumn(selectionRange.end());
     for (int line = endLine; line >= startLine; --line)
       editInsertText(line, fromVirtualColumn(line, column), chars);
@@ -2736,8 +2736,8 @@ void KateDocument::backspace( KateView *view, const KTextEditor::Cursor& c )
     return;
   }
 
-  uint col = qMax( c.column(), 0 );
-  uint line = qMax( c.line(), 0 );
+  uint col = std::max( c.column(), 0 );
+  uint line = std::max( c.line(), 0 );
 
   if ((col == 0) && (line == 0))
     return;
@@ -2862,12 +2862,12 @@ void KateDocument::paste ( KateView* view, const QString &text )
       removeText(KTextEditor::Range(pos,
                                     pos.line()+pasteLines.count()-1, endColumn));
     } else {
-      int maxi = qMin(pos.line() + pasteLines.count(), this->lines());
+      int maxi = std::min(pos.line() + pasteLines.count(), this->lines());
 
       for (int i = pos.line(); i < maxi; ++i) {
         int pasteLength = pasteLines.at(i-pos.line()).length();
         removeText(KTextEditor::Range(i, pos.column(),
-                                      i, qMin(pasteLength + pos.column(), lineLength(i))));
+                                      i, std::min(pasteLength + pos.column(), lineLength(i))));
       }
     }
   }
@@ -3204,8 +3204,8 @@ bool KateDocument::removeStartStopCommentFromSelection( KateView *view, int attr
   const QString startComment = highlight()->getCommentStart( attrib );
   const QString endComment = highlight()->getCommentEnd( attrib );
 
-  int sl = qMax<int> (0, view->selectionRange().start().line());
-  int el = qMin<int>  (view->selectionRange().end().line(), lastLine());
+  int sl = std::max<int> (0, view->selectionRange().start().line());
+  int el = std::min<int>  (view->selectionRange().end().line(), lastLine());
   int sc = view->selectionRange().start().column();
   int ec = view->selectionRange().end().column();
 
@@ -3626,8 +3626,8 @@ bool KateDocument::findMatchingBracket( KTextEditor::Range& range, int maxLines 
   const int searchDir = isStartBracket( bracket ) ? 1 : -1;
   uint nesting = 0;
 
-  int minLine = qMax( range.start().line() - maxLines, 0 );
-  int maxLine = qMin( range.start().line() + maxLines, documentEnd().line() );
+  int minLine = std::max( range.start().line() - maxLines, 0 );
+  int maxLine = std::min( range.start().line() + maxLines, documentEnd().line() );
 
   range.end() = range.start();
   KTextEditor::DocumentCursor cursor(this);
@@ -4009,13 +4009,13 @@ void KateDocument::readVariables(bool onlyViewAndRenderer)
     v->renderer()->config()->configStart();
   }
   // read a number of lines in the top/bottom of the document
-  for (int i=0; i < qMin( 9, lines() ); ++i )
+  for (int i=0; i < std::min( 9, lines() ); ++i )
   {
     readVariableLine( line( i ), onlyViewAndRenderer );
   }
   if ( lines() > 10 )
   {
-    for ( int i = qMax( 10, lines() - 10); i < lines(); i++ )
+    for ( int i = std::max( 10, lines() - 10); i < lines(); i++ )
     {
       readVariableLine( line( i ), onlyViewAndRenderer );
     }

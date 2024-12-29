@@ -72,8 +72,8 @@ void KateViVisualMode::SelectBlockInclusive(Cursor c1, Cursor c2) {
 
 
 void KateViVisualMode::SelectLines(Range range) {
-    int startline = qMin(range.start().line(),range.end().line());
-    int endline   = qMax(range.start().line(),range.end().line());
+    int startline = std::min(range.start().line(),range.end().line());
+    int endline   = std::max(range.start().line(),range.end().line());
     m_view->setSelection(Range(Cursor(startline,0),
                                Cursor(endline,m_view->doc()->lineLength(endline)+1)));
 }
@@ -162,7 +162,7 @@ void KateViVisualMode::reset()
               m_stickyColumn = -1;
             }
           } else {
-            updateCursor(qMin(m_start,c));
+            updateCursor(std::min(m_start,c));
             m_stickyColumn = -1;
           }
         }

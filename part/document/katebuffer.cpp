@@ -292,7 +292,7 @@ void KateBuffer::ensureHighlighted (int line, int lookAhead)
     return;
 
   // update hl until this line + max lookAhead
-  int end = qMin(line + lookAhead, lines ()-1);
+  int end = std::min(line + lookAhead, lines ()-1);
 
   // ensure we have enough highlighted
   doHighlight ( m_lineHighlighted, end, false );
@@ -452,7 +452,7 @@ void KateBuffer::doHighlight (int startLine, int endLine, bool invalidate)
   Kate::TextLine nextLine;
   // loop over the lines of the block, from startline to endline or end of block
   // if stillcontinue forces us to do so
-  for (; current_line < qMin (endLine+1, lines()); ++current_line)
+  for (; current_line < std::min (endLine+1, lines()); ++current_line)
   {
     // get next line, if any    
     if ((current_line + 1) < lines())
@@ -503,11 +503,11 @@ void KateBuffer::doHighlight (int startLine, int endLine, bool invalidate)
     kDebug (13020) << "HIGHLIGHTED TAG LINES: " << startLine <<  current_line;
 #endif
 
-    emit tagLines (startLine, qMax (current_line, oldHighlighted));
+    emit tagLines (startLine, std::max (current_line, oldHighlighted));
 
     if(start_spellchecking >= 0 && lines() > 0) {
       emit respellCheckBlock(start_spellchecking,
-                             qMin(lines()-1, (last_line_spellchecking==-1)?qMax (current_line, oldHighlighted):last_line_spellchecking));
+                             std::min(lines()-1, (last_line_spellchecking==-1)?std::max (current_line, oldHighlighted):last_line_spellchecking));
     }
   }
 

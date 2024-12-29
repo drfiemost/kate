@@ -196,7 +196,7 @@ class TextLoader
               int bomBytes = 0;
               if (m_firstRead) {
                 // use first 16 bytes max to allow BOM detection of codec
-                QByteArray bom (m_buffer.data(), qMin (16, c));
+                QByteArray bom (m_buffer.data(), std::min (16, c));
                 QTextCodec *codecForByteOrderMark = QTextCodec::codecForUtfText (bom, 0);
 
                 // if codec != null, we found a BOM!

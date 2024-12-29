@@ -340,7 +340,7 @@ Cursor KateViModeBase::findNextWordStart( int fromLine, int fromColumn, bool onl
         if ( onlyCurrentLine ) {
             return Cursor::invalid();
         } else if ( l >= doc()->lines()-1 ) {
-            c = qMax(line.length()-1, 0);
+            c = std::max(line.length()-1, 0);
             return Cursor::invalid();
         } else {
             c = 0;
@@ -365,7 +365,7 @@ Cursor KateViModeBase::findNextWordStart( int fromLine, int fromColumn, bool onl
     if ( c3 <= 0 )
       c3 = line.length()-1;
 
-    c = qMin( c1, qMin( c2, c3 ) );
+    c = std::min( c1, std::min( c2, c3 ) );
 
     found = true;
   }
@@ -548,7 +548,7 @@ Cursor KateViModeBase::findPrevWordStart( int fromLine, int fromColumn, bool onl
     if ( c4 <= 0 )
       c4 = 0;
 
-    c = qMax( c1, qMax( c2, qMax( c3, c4 ) ) );
+    c = std::max( c1, std::max( c2, std::max( c3, c4 ) ) );
 
     found = true;
   }
@@ -592,7 +592,7 @@ Cursor KateViModeBase::findPrevWORDStart( int fromLine, int fromColumn, bool onl
 
     c1++; // the startOfWORD pattern matches one character before the word
 
-    c = qMax( c1, c2 );
+    c = std::max( c1, c2 );
 
     if ( c <= 0 )
       c = 0;
@@ -683,7 +683,7 @@ KateViRange innerRange(KateViRange range, bool inner) {
   KateViRange r = range;
 
   if (inner) {
-    const int columnDistance = qAbs(r.startColumn - r.endColumn);
+    const int columnDistance = std::abs(r.startColumn - r.endColumn);
     if ((r.startLine == r.endLine) && columnDistance == 1 )
     {
       // Start and end are right next to each other; there is nothing inside them.
@@ -1066,7 +1066,7 @@ KateViRange KateViModeBase::goVisualLineUpDown(int lines) {
   // on by moving lines visual lines.  We ignore the column, for now.
   int finishVisualLine = m_viewInternal->cache()->viewLine(m_view->cursorPosition());
   int finishRealLine = m_view->cursorPosition().line();
-  int count = qAbs(lines);
+  int count = std::abs(lines);
   bool invalidPos = false;
   if (lines > 0)
   {
@@ -1457,7 +1457,7 @@ void KateViModeBase::switchView(Direction direction) {
         case Left:
           if (view != m_view && x2 <= curr_x1 &&
               ( x2 > best_x2 ||
-                (x2 == best_x2 && qAbs(curr_cursor_y - center_y) < qAbs(curr_cursor_y - best_center_y)) ||
+                (x2 == best_x2 && std::abs(curr_cursor_y - center_y) < std::abs(curr_cursor_y - best_center_y)) ||
                 bestview == NULL)){
             bestview = view;
             best_x2 = x2;
@@ -1467,7 +1467,7 @@ void KateViModeBase::switchView(Direction direction) {
         case Right:
           if (view != m_view && x1 >= curr_x2 &&
               ( x1 < best_x1 ||
-                (x1 == best_x1 && qAbs(curr_cursor_y - center_y) < qAbs(curr_cursor_y - best_center_y)) ||
+                (x1 == best_x1 && std::abs(curr_cursor_y - center_y) < std::abs(curr_cursor_y - best_center_y)) ||
                 bestview == NULL)){
             bestview = view;
             best_x1 = x1;
@@ -1477,7 +1477,7 @@ void KateViModeBase::switchView(Direction direction) {
         case Down:
           if (view != m_view && y1 >= curr_y2 &&
               ( y1 < best_y1 ||
-                (y1 == best_y1 && qAbs(curr_cursor_x - center_x) < qAbs(curr_cursor_x - best_center_x)) ||
+                (y1 == best_y1 && std::abs(curr_cursor_x - center_x) < std::abs(curr_cursor_x - best_center_x)) ||
                 bestview == NULL)){
             bestview = view;
             best_y1 = y1;
@@ -1487,7 +1487,7 @@ void KateViModeBase::switchView(Direction direction) {
         case Up:
           if (view != m_view && y2 <= curr_y1 &&
               ( y2 > best_y2 ||
-                (y2 == best_y2 && qAbs(curr_cursor_x - center_x) < qAbs(curr_cursor_x - best_center_x)) ||
+                (y2 == best_y2 && std::abs(curr_cursor_x - center_x) < std::abs(curr_cursor_x - best_center_x)) ||
                 bestview == NULL)){
             bestview = view;
             best_y2 = y2;

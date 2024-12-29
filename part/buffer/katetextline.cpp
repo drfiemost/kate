@@ -127,7 +127,7 @@ int TextLineData::toVirtualColumn (int column, int tabWidth) const
     return 0;
 
   int x = 0;
-  const int zmax = qMin(column, m_text.length());
+  const int zmax = std::min(column, m_text.length());
   const QChar *unicode = m_text.unicode();
 
   for ( int z = 0; z < zmax; ++z)
@@ -146,7 +146,7 @@ int TextLineData::fromVirtualColumn (int column, int tabWidth) const
   if (column < 0)
     return 0;
 
-  const int zmax = qMin(m_text.length(), column);
+  const int zmax = std::min(m_text.length(), column);
   const QChar *unicode = m_text.unicode();
 
   int x = 0;
@@ -162,7 +162,7 @@ int TextLineData::fromVirtualColumn (int column, int tabWidth) const
     x += diff;
   }
 
-  return z + qMax(column - x, 0);
+  return z + std::max(column - x, 0);
 }
 
 int TextLineData::virtualLength (int tabWidth) const

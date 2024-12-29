@@ -566,7 +566,7 @@ KTextEditor::Range KateOnTheFlyChecker::findWordBoundaries(const KTextEditor::Cu
   if(match < 0) {
     match = text.lastIndexOf(boundaryRegExp);
   }
-  boundaryStart.setColumn(m_document->computePositionWrtOffsets(decToEncOffsetList, qMax(0, match)));
+  boundaryStart.setColumn(m_document->computePositionWrtOffsets(decToEncOffsetList, std::max(0, match)));
   // and now the end position
   const int endLine = end.line();
   const int endColumn = end.column();
@@ -590,7 +590,7 @@ KTextEditor::Range KateOnTheFlyChecker::findWordBoundaries(const KTextEditor::Cu
     match = extendedBoundaryRegExp.indexIn(text);
   }
   boundaryEnd.setColumn(m_document->computePositionWrtOffsets(decToEncOffsetList,
-                                                              translatedColumn + qMax(0, match)));
+                                                              translatedColumn + std::max(0, match)));
   return KTextEditor::Range(boundaryStart, boundaryEnd);
 }
 

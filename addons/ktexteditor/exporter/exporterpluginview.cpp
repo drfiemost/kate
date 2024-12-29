@@ -181,11 +181,11 @@ void ExporterPluginView::exportData(const bool useSelection, QTextStream &output
       } else if ( block.start >= lineStart + remainingChars ) {
         break;
       }
-      int start = qMax(block.start, lineStart);
+      int start = std::max(block.start, lineStart);
       if ( start > handledUntil ) {
         exporter->exportText( line.mid( handledUntil, start - handledUntil ), noAttrib );
       }
-      int length = qMin(block.length, remainingChars);
+      int length = std::min(block.length, remainingChars);
       exporter->exportText( line.mid( start, length ), block.attribute);
       handledUntil = start + length;
     }

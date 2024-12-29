@@ -644,7 +644,7 @@ bool KateDocManager::loadMetaInfos(KTextEditor::Document *doc, const KUrl &url)
     KConfigGroup urlGroup( m_metaInfos, url.prettyUrl() );
     const QString old_md5 = urlGroup.readEntry("MD5");
 
-    if ((const char *)md5 == old_md5)
+    if (QString::fromLatin1(md5) == old_md5)
     {
       if (KTextEditor::ParameterizedSessionConfigInterface *iface =
         qobject_cast<KTextEditor::ParameterizedSessionConfigInterface *>(doc))

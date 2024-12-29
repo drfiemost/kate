@@ -635,7 +635,7 @@ void KateNavigationConfigTab::apply ()
 
   KateDocumentConfig::global()->setSmartHome(ui->chkSmartHome->isChecked());
 
-  KateViewConfig::global()->setAutoCenterLines(qMax(0, ui->sbAutoCenterCursor->value()));
+  KateViewConfig::global()->setAutoCenterLines(std::max(0, ui->sbAutoCenterCursor->value()));
   KateDocumentConfig::global()->setPageUpDownMovesCursor(ui->chkPagingMovesCursor->isChecked());
 
   KateViewConfig::global()->setPersistentSelection (ui->cbTextSelectionMode->currentIndex() == 1);

@@ -2063,7 +2063,7 @@ bool KateView::removeSelectedText()
 
   // don't redraw the cleared selection - that's done in editEnd().
   if (blockSelect) {
-    int selectionColumn = qMin(m_doc->toVirtualColumn(selection.start()), m_doc->toVirtualColumn(selection.end()));
+    int selectionColumn = std::min(m_doc->toVirtualColumn(selection.start()), m_doc->toVirtualColumn(selection.end()));
     KTextEditor::Range newSelection = selection;
     newSelection.start().setColumn(m_doc->fromVirtualColumn(newSelection.start().line(), selectionColumn));
     newSelection.end().setColumn(m_doc->fromVirtualColumn(newSelection.end().line(), selectionColumn));

@@ -125,7 +125,7 @@ KateAutoIndent::~KateAutoIndent ()
 QString KateAutoIndent::tabString (int length, int align) const
 {
   QString s;
-  length = qMin (length, 256); // sanity check for large values of pos
+  length = std::min (length, 256); // sanity check for large values of pos
   int spaces = qBound(0, align - length, 256);
 
   if (!useSpaces)
@@ -170,7 +170,7 @@ bool KateAutoIndent::doIndent(int line, int indentDepth, int align)
     // Use the passed indentDepth as the alignment, and set the indentDepth to
     // that value minus the number of spaces found (but don't let it get negative).
     align = indentDepth;
-    indentDepth = qMax(0, align - (oldIndentation.size() - 1 - i));
+    indentDepth = std::max(0, align - (oldIndentation.size() - 1 - i));
   }
 
   QString indentString = tabString(indentDepth, align);
@@ -384,7 +384,7 @@ bool KateAutoIndent::changeIndent (const KTextEditor::Range &range, int change)
 
   // loop over all lines given...
   for (int line = range.start().line () < 0 ? 0 : range.start().line ();
-       line <= qMin (range.end().line (), doc->lines()-1); ++line)
+       line <= std::min (range.end().line (), doc->lines()-1); ++line)
   {
     // don't indent empty lines
     if (doc->line(line).isEmpty())
@@ -423,7 +423,7 @@ void KateAutoIndent::indent (KateView *view, const KTextEditor::Range &range)
 
   // loop over all lines given...
   for (int line = range.start().line () < 0 ? 0 : range.start().line ();
-       line <= qMin (range.end().line (), doc->lines()-1); ++line)
+       line <= std::min (range.end().line (), doc->lines()-1); ++line)
   {
     // let the script indent for us...
     scriptIndent (view, KTextEditor::Cursor (line, 0), QChar());

@@ -191,7 +191,7 @@ bool DocumentCursor::move(int chars, WrapBehavior wrapBehavior)
   while (chars != 0) {
     if (chars > 0) {
       if (wrapBehavior == Wrap) {
-        int advance = qMin(lineLength - c.column(), chars);
+        int advance = std::min(lineLength - c.column(), chars);
         
         if (chars > advance) {
           if (c.line() + 1 >= document()->lines()) {
@@ -212,7 +212,7 @@ bool DocumentCursor::move(int chars, WrapBehavior wrapBehavior)
         chars = 0;
       }
     } else {
-      int back = qMin(c.column(), -chars);
+      int back = std::min(c.column(), -chars);
       if (-chars > back) {
         if (c.line() == 0)
           return false;

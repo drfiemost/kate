@@ -309,7 +309,7 @@ bool KateViNormalMode::handleKeypress( const QKeyEvent *e )
             int currLine = m_view->cursorPosition().line();
             int delta = r.endLine - currLine;
             int vline = m_view->textFolding().lineToVisibleLine( currLine );
-            r.endLine = m_view->textFolding().visibleLineToLine( qMax (vline+delta, 0) /* ensure we have a valid line */ );
+            r.endLine = m_view->textFolding().visibleLineToLine( std::max (vline+delta, 0) /* ensure we have a valid line */ );
             if ( r.endLine >= doc()->lines() ) r.endLine = doc()->lines()-1;
 
             // make sure the position is valid before moving the cursor there
@@ -2734,9 +2734,9 @@ KateViRange KateViNormalMode::motionToMatchingItem()
 
       if ( matchItemIdx != -1 || itemIdx != -1 ) {
           if ( !reverse ) {
-            column = qMin( (unsigned int)itemIdx, (unsigned int)matchItemIdx );
+            column = std::min( (unsigned int)itemIdx, (unsigned int)matchItemIdx );
           } else {
-            column = qMax( itemIdx, matchItemIdx );
+            column = std::max( itemIdx, matchItemIdx );
           }
       }
 
@@ -3073,7 +3073,7 @@ KateViRange KateViNormalMode::motionToAfterParagraph()
     }
 
     // if we ended up on the last line, the cursor should be placed on the last column
-    int column = (line == doc()->lines()-1) ? qMax( getLine( line ).length()-1, 0 ) : 0;
+    int column = (line == doc()->lines()-1) ? std::max( getLine( line ).length()-1, 0 ) : 0;
 
     KateViRange r( line, column, ViMotion::InclusiveMotion );
 

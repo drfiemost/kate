@@ -388,7 +388,7 @@ QString KateCTagsView::currentWord( )
 
     QString linestr = kv->document()->line(line);
 
-    int startPos = qMax(qMin(col, linestr.length()-1), 0);
+    int startPos = std::max(std::min(col, linestr.length()-1), 0);
     int endPos = startPos;
     while (startPos >= 0 && (linestr[startPos].isLetterOrNumber() ||
         (linestr[startPos] == ':' && includeColon) ||

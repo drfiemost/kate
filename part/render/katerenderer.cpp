@@ -245,7 +245,7 @@ void KateRenderer::paintTabstop(QPainter &paint, qreal x, qreal y)
 {
   QPen penBackup( paint.pen() );
   QPen pen( config()->tabMarkerColor() );
-  pen.setWidthF(qMax(1.0, spaceWidth() / 10.0));
+  pen.setWidthF(std::max(1.0, spaceWidth() / 10.0));
   paint.setPen( pen );
   paint.setRenderHint(QPainter::Antialiasing, false);
 
@@ -281,7 +281,7 @@ void KateRenderer::paintNonBreakSpace(QPainter &paint, qreal x, qreal y)
 {
   QPen penBackup( paint.pen() );
   QPen pen( config()->tabMarkerColor() );
-  pen.setWidthF(qMax(1.0, spaceWidth() / 10.0));
+  pen.setWidthF(std::max(1.0, spaceWidth() / 10.0));
   paint.setPen( pen );
   paint.setRenderHint(QPainter::Antialiasing, false);
 
@@ -299,7 +299,7 @@ void KateRenderer::paintNonBreakSpace(QPainter &paint, qreal x, qreal y)
   paint.setPen( penBackup );
 }
 
-void KateRenderer::paintIndentMarker(QPainter &paint, uint x, uint y /*row*/)
+void KateRenderer::paintIndentMarker(QPainter &paint, uint x, uint /*row*/)
 {
   QPen penBackup( paint.pen() );
   QPen myPen(config()->indentationLineColor());
@@ -431,8 +431,8 @@ QList<QTextLayout::FormatRange> KateRenderer::decorationsForLine( const Kate::Te
       } else {
         KTextEditor::Range rangeNeeded = m_view->selectionRange() & KTextEditor::Range(line, 0, line + 1, 0);
 
-        currentPosition = qMax(KTextEditor::Cursor(line, 0), rangeNeeded.start());
-        endPosition = qMin(KTextEditor::Cursor(line + 1, 0), rangeNeeded.end());
+        currentPosition = std::max(KTextEditor::Cursor(line, 0), rangeNeeded.start());
+        endPosition = std::min(KTextEditor::Cursor(line + 1, 0), rangeNeeded.end());
       }
     } else {
       currentPosition = KTextEditor::Cursor(line, 0);
@@ -703,7 +703,7 @@ void KateRenderer::paintTextLine(QPainter& paint, KateLineLayoutPtr range, int x
     if (drawCaret() && cursor && range->includesCursor(*cursor)) {
       int caretWidth, lineWidth = 2;
       QColor color;
-      QTextLine line = range->layout()->lineForTextPosition(qMin(cursor->column(), range->length()));
+      QTextLine line = range->layout()->lineForTextPosition(std::min(cursor->column(), range->length()));
 
       // Determine the caret's style
       caretStyles style = caretStyle();
@@ -898,12 +898,12 @@ void KateRenderer::updateFontHeight ()
   // both heights (bug #302748)
   QFont italicFont = config()->font();
   italicFont.setItalic(true);
-  m_fontHeight = qMax (m_fontHeight, QFontMetrics(italicFont).height());
+  m_fontHeight = std::max (m_fontHeight, QFontMetrics(italicFont).height());
   
   // same for bold font
   QFont boldFont = config()->font();
   boldFont.setBold (true);
-  m_fontHeight = qMax (m_fontHeight, QFontMetrics(boldFont).height());
+  m_fontHeight = std::max (m_fontHeight, QFontMetrics(boldFont).height());
 }
 
 qreal KateRenderer::spaceWidth() const

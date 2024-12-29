@@ -196,7 +196,7 @@ KTextEditor::Cursor KateScriptDocument::rfind(int line, int column, const QStrin
     if (cursor->line() != start) {
       cursor->setColumn(textLine->length());
     } else if (column >= textLine->length()) {
-      cursor->setColumn(qMax(textLine->length(), 0));
+      cursor->setColumn(std::max(textLine->length(), 0));
     }
 
     int foundAt;

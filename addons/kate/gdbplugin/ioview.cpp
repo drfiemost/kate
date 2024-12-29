@@ -101,7 +101,7 @@ void IOView::createFifos()
     m_stdoutD.open(QIODevice::ReadWrite);
     
     m_stdout.setFileName(m_stdoutFifo);
-    m_stdoutFD = ::open(m_stdoutFifo.toLocal8Bit(), O_RDWR|O_NONBLOCK );
+    m_stdoutFD = ::open(qPrintable(m_stdoutFifo), O_RDWR|O_NONBLOCK );
     if (m_stdoutFD == -1) return;
     if (!m_stdout.open(m_stdoutFD, QIODevice::ReadWrite)) return;
     
@@ -114,7 +114,7 @@ void IOView::createFifos()
     m_stderrD.open(QIODevice::ReadWrite);
 
     m_stderr.setFileName(m_stderrFifo);
-    m_stderrFD = ::open(m_stderrFifo.toLocal8Bit(), O_RDONLY|O_NONBLOCK );
+    m_stderrFD = ::open(qPrintable(m_stderrFifo), O_RDONLY|O_NONBLOCK );
     if (m_stderrFD == -1) return;
     if (!m_stderr.open(m_stderrFD, QIODevice::ReadOnly)) return;
     
@@ -205,7 +205,7 @@ void IOView::addStdErrText(const QString &text)
 QString IOView::createFifo(const QString &prefix)
 {
     QString fifo = KStandardDirs::locateLocal("socket", prefix + KRandom::randomString(3));
-    int result = mkfifo(QFile::encodeName(fifo), 0666);
+    int result = mkfifo(QFile::encodeName(fifo).constData(), 0666);
     if (result != 0) return QString();
     return fifo;
 }

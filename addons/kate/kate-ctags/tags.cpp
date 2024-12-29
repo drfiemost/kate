@@ -30,10 +30,10 @@ Tags::TagEntry::TagEntry( const QString & tag, const QString & type, const QStri
 bool Tags::hasTag( const QString & tag )
 {
 	ctags::tagFileInfo info;
-	ctags::tagFile * file = ctags::tagsOpen( _tagsfile.toLocal8Bit(), &info );
+	ctags::tagFile * file = ctags::tagsOpen( qPrintable(_tagsfile), &info );
 	ctags::tagEntry entry;
 
-	bool found = ( ctags::tagsFind( file, &entry, tag.toLocal8Bit(), TAG_FULLMATCH | TAG_OBSERVECASE ) == ctags::TagSuccess );
+	bool found = ( ctags::tagsFind( file, &entry, qPrintable(tag), TAG_FULLMATCH | TAG_OBSERVECASE ) == ctags::TagSuccess );
 
 	ctags::tagsClose( file );
 
@@ -47,7 +47,7 @@ unsigned int Tags::numberOfMatches( const QString & tagpart, bool partial )
 	if ( tagpart.isEmpty() ) return 0;
 
 	ctags::tagFileInfo info;
-	ctags::tagFile * file = ctags::tagsOpen( _tagsfile.toLocal8Bit(), &info );
+	ctags::tagFile * file = ctags::tagsOpen( qPrintable(_tagsfile), &info );
 	ctags::tagEntry entry;
 
 	QByteArray tagpartBArray = tagpart.toLocal8Bit(); // for holding the char *
@@ -72,7 +72,7 @@ Tags::TagList Tags::getMatches( const QString & tagpart, bool partial, const QSt
 	if ( tagpart.isEmpty() ) return list;
 
 	ctags::tagFileInfo info;
-	ctags::tagFile * file = ctags::tagsOpen( _tagsfile.toLocal8Bit(), &info );
+	ctags::tagFile * file = ctags::tagsOpen( qPrintable(_tagsfile), &info );
 	ctags::tagEntry entry;
 
 	QByteArray tagpartBArray = tagpart.toLocal8Bit(); // for holding the char *

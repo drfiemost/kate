@@ -879,7 +879,7 @@ void KateFileTreeModel::updateBackgrounds(bool force)
       
       e = e * e;
 
-      int n = qMax(v + e, 1);
+      int n = std::max(v + e, 1);
       
       shade.setRgb(
         ((shade.red()*v) + (eshade.red()*e)) / n,

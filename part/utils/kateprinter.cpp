@@ -532,7 +532,7 @@ bool KatePrinter::print (KateDocument *doc)
 
           int _widest( 0 );
           foreach (const KateExtendedAttribute::Ptr &attribute, _attributes)
-            _widest = qMax(QFontMetrics(attribute->font()).width(attribute->name().section(':',1,1)), _widest);
+            _widest = std::max(QFontMetrics(attribute->font()).width(attribute->name().section(':',1,1)), _widest);
 
           int _guideCols = _w/( _widest + innerMargin );
 
@@ -644,7 +644,7 @@ bool KatePrinter::print (KateDocument *doc)
 
       int proceedLines = _lines;
       if (remainder) {
-        proceedLines = qMin((maxHeight - y) / fontHeight, remainder);
+        proceedLines = std::min((maxHeight - y) / fontHeight, remainder);
 
         paint.translate(0, -(_lines-remainder)*fontHeight+1);
         paint.setClipRect(0, (_lines-remainder)*fontHeight+1, maxWidth, proceedLines*fontHeight); //### drop the crosspatch in printerfriendly mode???

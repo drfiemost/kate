@@ -243,7 +243,7 @@ void KateCompletionTree::resizeColumns(bool firstShow, bool forceResize)
   
   int newIndentWidth = columnViewportPosition(modelIndexOfName);
 
-  int newWidth = qMin(maxWidth, qMax(75, totalColumnsWidth));
+  int newWidth = std::min(maxWidth, std::max(75, totalColumnsWidth));
   
   if(newWidth == maxWidth)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);

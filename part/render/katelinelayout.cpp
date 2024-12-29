@@ -137,7 +137,7 @@ void KateLineLayout::setLayout(QTextLayout* layout)
   m_layoutDirty = !m_layout;
   m_dirtyList.clear();
   if (m_layout)
-    for (int i = 0; i < qMax(1, m_layout->lineCount()); ++i)
+    for (int i = 0; i < std::max(1, m_layout->lineCount()); ++i)
       m_dirtyList.append(true);
 }
 
@@ -188,7 +188,7 @@ int KateLineLayout::width( ) const
   int width = 0;
 
   for (int i = 0; i < m_layout->lineCount(); ++i)
-    width = qMax((int)m_layout->lineAt(i).naturalTextWidth(), width);
+    width = std::max((int)m_layout->lineAt(i).naturalTextWidth(), width);
 
   return width;
 }

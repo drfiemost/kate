@@ -275,7 +275,7 @@ KTextEditor::Cursor KateViewInternal::endPos() const
   if (!cache()->viewCacheLineCount())
     return KTextEditor::Cursor();
 
-  for (int i = qMin(linesDisplayed() - 1, cache()->viewCacheLineCount() - 1); i >= 0; i--) {
+  for (int i = std::min(linesDisplayed() - 1, cache()->viewCacheLineCount() - 1); i >= 0; i--) {
     const KateTextLayout& thisLine = cache()->viewLine(i);
 
     if (thisLine.line() == -1) continue;
@@ -378,12 +378,12 @@ void KateViewInternal::scrollAction( int action )
 
 void KateViewInternal::scrollNextPage()
 {
-  scrollViewLines(qMax( linesDisplayed() - 1, 0 ));
+  scrollViewLines(std::max( linesDisplayed() - 1, 0 ));
 }
 
 void KateViewInternal::scrollPrevPage()
 {
-  scrollViewLines(-qMax( linesDisplayed() - 1, 0 ));
+  scrollViewLines(-std::max( linesDisplayed() - 1, 0 ));
 }
 
 void KateViewInternal::scrollPrevLine()
@@ -456,12 +456,12 @@ void KateViewInternal::scrollPos(KTextEditor::Cursor& c, bool force, bool called
     int lines = linesDisplayed();
     if (m_view->textFolding().visibleLines() < lines) {
       KTextEditor::Cursor end(m_view->textFolding().visibleLines() - 1, doc()->lineLength(m_view->textFolding().visibleLineToLine(m_view->textFolding().visibleLines() - 1)));
-      lines = qMin(linesDisplayed(), cache()->displayViewLine(end) + 1);
+      lines = std::min(linesDisplayed(), cache()->displayViewLine(end) + 1);
     }
 
     Q_ASSERT(lines >= 0);
 
-    if (!calledExternally && qAbs(viewLinesScrolled) < lines)
+    if (!calledExternally && std::abs(viewLinesScrolled) < lines)
     {
       updateView(false, viewLinesScrolled);
 
@@ -506,7 +506,7 @@ void KateViewInternal::scrollColumns ( int x )
   int dx = m_startX - x;
   m_startX = x;
 
-  if (qAbs(dx) < width()) {
+  if (std::abs(dx) < width()) {
     // scroll excluding child widgets (floating notifications)
     scroll(dx, 0, rect());
   } else
@@ -546,7 +546,7 @@ void KateViewInternal::doUpdateView(bool changed, int viewLinesScrolled)
      and there frame arount KateViewInternal.  In which
      case we'd set the view cache to 0 (or less!) lines, and
      start allocating huge chunks of data, later. */
-  int newSize = (qMax (0, height()) / renderer()->lineHeight()) + 1;
+  int newSize = (std::max (0, height()) / renderer()->lineHeight()) + 1;
   cache()->updateViewCache(startPos(), newSize, viewLinesScrolled);
   m_visibleLineCount = newSize;
 
@@ -558,7 +558,7 @@ void KateViewInternal::doUpdateView(bool changed, int viewLinesScrolled)
 
   m_lineScroll->setValue(startPos().line());
   m_lineScroll->setSingleStep(1);
-  m_lineScroll->setPageStep(qMax (0, height()) / renderer()->lineHeight());
+  m_lineScroll->setPageStep(std::max (0, height()) / renderer()->lineHeight());
   m_lineScroll->blockSignals(blocked);
 
   KateViewConfig::ScrollbarMode show_scrollbars = static_cast<KateViewConfig::ScrollbarMode>(view()->config()->showScrollbars());
@@ -716,11 +716,11 @@ int KateViewInternal::linesDisplayed() const
   int h = height();
 
   // catch zero heights, even if should not happen
-  int fh = qMax (1, renderer()->lineHeight());
+  int fh = std::max (1, renderer()->lineHeight());
 
   // default to 1, there is always one line around....
   // too many places calc with linesDisplayed() - 1
-  return qMax (1, (h - (h % fh)) / fh);
+  return std::max (1, (h - (h % fh)) / fh);
 }
 
 QPoint KateViewInternal::cursorToCoordinate( const KTextEditor::Cursor & cursor, bool realCursor, bool includeBorder ) const
@@ -790,7 +790,7 @@ void KateViewInternal::doSmartNewline()
 {
   int ln = m_cursor.line();
   Kate::TextLine line = doc()->kateTextLine(ln);
-  int col = qMin(m_cursor.column(), line->firstChar());
+  int col = std::min(m_cursor.column(), line->firstChar());
   if (col != -1) {
     while (line->length() > col &&
             !(line->at(col).isLetterOrNumber() || line->at(col) == QLatin1Char('_')) &&
@@ -888,7 +888,7 @@ public:
     if (view()->wrapCursor())
       m_column = qBound( 0, column(), doc()->lineLength( line() ) );
     else
-      m_column = qMax( 0, column() );
+      m_column = std::max( 0, column() );
     Q_ASSERT( valid() );
   }
 
@@ -1289,7 +1289,7 @@ KateTextLayout KateViewInternal::nextLayout() const
 KTextEditor::Cursor KateViewInternal::viewLineOffset(const KTextEditor::Cursor& virtualCursor, int offset, bool keepX)
 {
   if (!m_view->dynWordWrap()) {
-    KTextEditor::Cursor ret(qMin((int)m_view->textFolding().visibleLines() - 1, virtualCursor.line() + offset), 0);
+    KTextEditor::Cursor ret(std::min((int)m_view->textFolding().visibleLines() - 1, virtualCursor.line() + offset), 0);
 
     if (ret.line() < 0)
       ret.setLine(0);
@@ -1523,7 +1523,7 @@ void KateViewInternal::scrollDown()
 void KateViewInternal::setAutoCenterLines(int viewLines, bool updateView)
 {
   m_autoCenterLines = viewLines;
-  m_minLinesVisible = qMin(int((linesDisplayed() - 1)/2), m_autoCenterLines);
+  m_minLinesVisible = std::min(int((linesDisplayed() - 1)/2), m_autoCenterLines);
   if (updateView)
     KateViewInternal::updateView();
 }
@@ -1544,9 +1544,9 @@ void KateViewInternal::pageUp( bool sel, bool half )
 
   int linesToScroll;
   if ( ! half )
-    linesToScroll = -qMax( (linesDisplayed() - 1) - lineadj, 0 );
+    linesToScroll = -std::max( (linesDisplayed() - 1) - lineadj, 0 );
   else
-    linesToScroll = -qMax( (linesDisplayed()/2 - 1) - lineadj, 0 );
+    linesToScroll = -std::max( (linesDisplayed()/2 - 1) - lineadj, 0 );
 
   m_preserveX = true;
 
@@ -1586,9 +1586,9 @@ void KateViewInternal::pageDown( bool sel ,bool half)
 
   int linesToScroll;
   if ( ! half )
-    linesToScroll = qMax( (linesDisplayed() - 1) - lineadj, 0 );
+    linesToScroll = std::max( (linesDisplayed() - 1) - lineadj, 0 );
   else
-    linesToScroll = qMax( (linesDisplayed()/2 - 1) - lineadj, 0 );
+    linesToScroll = std::max( (linesDisplayed()/2 - 1) - lineadj, 0 );
 
   m_preserveX = true;
 
@@ -1626,7 +1626,7 @@ int KateViewInternal::maxLen(int startLine)
     if (virtualLine < 0 || virtualLine >= (int)m_view->textFolding().visibleLines())
       break;
 
-    maxLen = qMax(maxLen, cache()->line(m_view->textFolding().visibleLineToLine(virtualLine))->width());
+    maxLen = std::max(maxLen, cache()->line(m_view->textFolding().visibleLineToLine(virtualLine))->width());
   }
 
   return maxLen;
@@ -3342,7 +3342,7 @@ void KateViewInternal::doDragScroll()
     scrollLines(startPos().line() + dy);
 
   if (columnScrollingPossible () && dx)
-    scrollColumns(qMin (m_startX + dx, m_columnScroll->maximum()));
+    scrollColumns(std::min (m_startX + dx, m_columnScroll->maximum()));
 
   if (!dy && !dx)
     stopDragScroll();
@@ -3405,7 +3405,7 @@ void KateViewInternal::editEnd(int editTagLineStart, int editTagLineEnd, bool ta
   if (tagFrom && (editTagLineStart <= int(m_view->textFolding().visibleLineToLine(startLine()))))
     tagAll();
   else
-    tagLines (editTagLineStart, tagFrom ? qMax(doc()->lastLine() + 1, editTagLineEnd) : editTagLineEnd, true);
+    tagLines (editTagLineStart, tagFrom ? std::max(doc()->lastLine() + 1, editTagLineEnd) : editTagLineEnd, true);
 
   if (editOldCursor == m_cursor.toCursor())
     updateBracketMarks();

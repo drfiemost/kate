@@ -647,8 +647,8 @@ void KateViEmulatedCommandBar::activateWordFromDocumentCompletion()
   QRegExp wordRegEx("\\w{1,}");
   QStringList foundWords;
   // Narrow the range of lines we search around the cursor so that we don't die on huge files.
-  const int startLine = qMax(0, m_view->cursorPosition().line() - 4096);
-  const int endLine = qMin(m_view->document()->lines(), m_view->cursorPosition().line() + 4096);
+  const int startLine = std::max(0, m_view->cursorPosition().line() - 4096);
+  const int endLine = std::min(m_view->document()->lines(), m_view->cursorPosition().line() + 4096);
   for (int lineNum = startLine; lineNum < endLine; lineNum++)
   {
     const QString line = m_view->document()->line(lineNum);
