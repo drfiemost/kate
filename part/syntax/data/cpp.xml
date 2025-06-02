@@ -588,6 +588,7 @@
     <item> Q_UINT64_C </item>
     <item> Q_UNLIKELY </item>
     <item> Q_UNUSED </item>
+    <item> Q_UNREACHABLE </item>
     <item> Q_WRONG_SB_CTYPE_MACROS </item>
     <item> Q_WS_MAC </item>
     <item> Q_WS_MAC32 </item>
