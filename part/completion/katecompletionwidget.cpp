@@ -176,6 +176,7 @@ KateCompletionWidget::KateCompletionWidget(KateView* parent)
 
   //Position the entry-list so a frame can be drawn around it
   m_entryList->move(frameWidth(), frameWidth());
+
 }
 
 KateCompletionWidget::~KateCompletionWidget() {
@@ -184,6 +185,12 @@ KateCompletionWidget::~KateCompletionWidget() {
 }
 
 void KateCompletionWidget::viewFocusOut() {
+    if (QApplication::focusWidget() != this) {
+        abortCompletion();
+    }
+}
+
+void KateCompletionWidget::focusOutEvent(QFocusEvent *) {
   abortCompletion();
 }
 
@@ -760,10 +767,16 @@ void KateCompletionWidget::abortCompletion( )
 
   bool wasActive = isCompletionActive();
 
+  if (hasFocus()) {
+    view()->activateWindow();
+    view()->setFocus();
+  }
+
   clear();
 
   if(!isHidden())
     hide();
+
   if(!m_argumentHintTree->isHidden())
     m_argumentHintTree->hide();
 

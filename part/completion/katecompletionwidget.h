@@ -161,7 +161,7 @@ class KATEPART_TESTS_EXPORT KateCompletionWidget : public QFrame
   protected:
     virtual void showEvent ( QShowEvent * event );
     virtual void resizeEvent ( QResizeEvent * event );
-//    virtual void focusInEvent ( QFocusEvent * event );
+    void focusOutEvent(QFocusEvent * event) override;
 
   private Q_SLOTS:
     void completionModelReset();
