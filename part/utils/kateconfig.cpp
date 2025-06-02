@@ -1439,7 +1439,7 @@ void KateViewConfig::setDynWordWrapIndicators (int mode)
   configStart ();
 
   m_dynWordWrapIndicatorsSet = true;
-  m_dynWordWrapIndicators = qBound(0, mode, 80);
+  m_dynWordWrapIndicators = std::clamp(mode, 0, 80);
 
   configEnd ();
 }
@@ -1586,7 +1586,7 @@ void KateViewConfig::setShowScrollbars(int mode)
   configStart ();
 
   m_showScrollbarsSet = true;
-  m_showScrollbars = qBound(0, mode, 80);
+  m_showScrollbars = std::clamp(mode, 0, 80);
 
   configEnd ();
 }

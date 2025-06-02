@@ -884,9 +884,9 @@ public:
   CalculatingCursor& operator--() { return operator-=( 1 ); }
 
   void makeValid() {
-    setLine(qBound( 0, line(), int( doc()->lines() - 1 ) ) );
+    setLine(std::clamp( line(), 0, int( doc()->lines() - 1 ) ) );
     if (view()->wrapCursor())
-      m_column = qBound( 0, column(), doc()->lineLength( line() ) );
+      m_column = std::clamp( column(), 0, doc()->lineLength( line() ) );
     else
       m_column = std::max( 0, column() );
     Q_ASSERT( valid() );

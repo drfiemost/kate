@@ -126,7 +126,7 @@ QString KateAutoIndent::tabString (int length, int align) const
 {
   QString s;
   length = std::min (length, 256); // sanity check for large values of pos
-  int spaces = qBound(0, align - length, 256);
+  int spaces = std::clamp(align - length, 0, 256);
 
   if (!useSpaces)
   {
