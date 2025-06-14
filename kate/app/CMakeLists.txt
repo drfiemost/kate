@@ -29,14 +29,9 @@ set(kateinterfaces_LIB_SRCS kateappadaptor.cpp
 
 kde4_add_library(kateinterfaces SHARED ${kateinterfaces_LIB_SRCS})
 
-# some stuff to have it compile for KDE 4.4
-if (NOT KDE_NO_DEPRECATED)
-   set (KDE_4_4_LIBS_NEEDED ${KDE4_KUTILS_LIBS})
-endif()
-
 target_link_libraries(kateinterfaces
    LINK_PUBLIC ${KDE4_KPARTS_LIBS}
-   LINK_PRIVATE ${KDE_4_4_LIBS_NEEDED} Qt4::QtXml ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KPARTS_LIBS})
+   LINK_PRIVATE Qt4::QtXml ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KPARTS_LIBS})
 
 set_target_properties(kateinterfaces PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION})
 
