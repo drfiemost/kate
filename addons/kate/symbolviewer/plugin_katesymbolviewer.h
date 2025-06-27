@@ -37,7 +37,6 @@
 #include <QTreeWidget>
 #include <QList>
 #include <QTimer>
-#include <klibloader.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kconfig.h>

@@ -36,7 +36,6 @@
 #include <KLocale>
 #include <kdebug.h>
 #include <KConfig>
-#include <KLibLoader>
 #include <KCodecs>
 #include <KMessageBox>
 #include <KEncodingFileDialog>

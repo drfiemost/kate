@@ -34,7 +34,6 @@
 #include <ktexteditor/view.h>
 #include <ktexteditor/modificationinterface.h>
 
-#include <klibloader.h>
 #include <klocale.h>
 #include <ktoolbar.h>
 

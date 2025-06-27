@@ -28,7 +28,6 @@
 #include <KToolBar>
 
 #include <kurl.h>
-#include <klibloader.h>
 #include <klocale.h>
 
 #include <kpluginloader.h>

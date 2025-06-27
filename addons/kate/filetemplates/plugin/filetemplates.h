@@ -28,7 +28,6 @@
 #include <kate/plugin.h>
 #include <ktexteditor/view.h>
 
-#include <klibloader.h>
 #include <klocale.h>
 #include <kurl.h>
 

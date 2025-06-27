@@ -35,7 +35,6 @@
 #include <KDialog>
 
 #include <kurl.h>
-#include <klibloader.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
