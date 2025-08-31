@@ -1463,6 +1463,7 @@
     <item> qFatal </item>
     <item> qFuzzyCompare </item>
     <item> qFuzzyCompare </item>
+    <item> qInfo </item>
     <item> qInstallMsgHandler </item>
     <item> qMacVersion </item>
     <item> qMakePair </item>
