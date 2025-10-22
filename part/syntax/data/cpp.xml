@@ -1202,6 +1202,7 @@
     <item> QString </item>
     <item> QStringList </item>
     <item> QStringListModel </item>
+    <item> QStringLiteral </item>
     <item> QStringMatcher </item>
     <item> QStringRef </item>
     <item> QStyle </item>
